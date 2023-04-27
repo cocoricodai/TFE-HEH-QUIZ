@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  # Create frontend container
+  frontend:
+    container_name: frontend
+    build: ./front
+    ports:
+      - 4200:4200
+    depends_on:
+      - backend
+
+  backend:
+    container_name: backend
+    build: ./back
+    ports:
+      - 5000:5000
+    depends_on:
+      - db
+    networks:
+      - default
+
+  db:
+    container_name: db-docker
+    image: mariadb:10.4
+    ports:
+      - 3306:3306
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: Test123*
+      MYSQL_DATABASE: quiz
+    volumes:
+      - "/data/mariadb"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+networks:
+  bridge:
+    external: true

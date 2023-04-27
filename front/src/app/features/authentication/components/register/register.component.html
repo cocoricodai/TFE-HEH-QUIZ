@@ -1,0 +1,24 @@
+<div class="flex h-screen items-center justify-center sm:px-6 lg:px-8">
+	<div class="w-full max-w-md">
+		<div class="mb-10">
+			<h2
+				class="text-center text-3xl font-extrabold text-gray-900 dark:font-bold dark:text-white"
+			>
+				{{ 'auth.register.label' | translate }}
+			</h2>
+		</div>
+
+		<register-form></register-form>
+
+		<p class="my-5 text-center">
+			{{ 'auth.register.login-label' | translate }}
+			<a
+				[routerLink]="['/auth/login']"
+				class="font-medium text-purple-500 hover:text-purple-600"
+				>Signin</a
+			>
+		</p>
+
+		<dark-mode-toggle></dark-mode-toggle>
+	</div>
+</div>

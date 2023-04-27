@@ -1,0 +1,6 @@
+<table-list
+	*ngIf="sections"
+	[columnsConfig]="sections[0] | columnHeader"
+	[rows]="sections"
+	title="Sections"
+></table-list>

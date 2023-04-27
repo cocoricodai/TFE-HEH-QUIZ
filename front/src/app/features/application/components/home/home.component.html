@@ -1,0 +1,85 @@
+<div class="mx-auto max-w-7xl overflow-x-auto p-5">
+	<div>
+		<div class="my-5">
+			<h3
+				class="border-b-purple-500 text-xl text-purple-600 dark:text-purple-500"
+			>
+				Latest
+			</h3>
+			<hr class="border-purple-500" />
+		</div>
+
+		<div
+			class="flex flex-row flex-wrap justify-center gap-5"
+			targetLoading
+			#latestQuiz="target-loading"
+		>
+			<div
+				class="w-full overflow-x-auto pb-5 sm:overflow-hidden sm:hover:overflow-x-auto"
+			>
+				<div class="whitespace-no-wrap scroll-snap-x-mandatory flex gap-5">
+					<div class="flex-none snap-start" *ngFor="let quiz of latestQuizs">
+						<quiz-card [quiz]="quiz"></quiz-card>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div>
+		<div class="my-5">
+			<h3
+				class="border-b-purple-500 text-xl text-purple-600 dark:text-purple-500"
+			>
+				Most Liked
+			</h3>
+			<hr class="border-purple-500" />
+		</div>
+		<div
+			class="flex flex-row flex-wrap justify-center gap-5"
+			targetLoading
+			#likedQuiz="target-loading"
+		>
+			<div
+				class="w-full overflow-x-auto pb-5 sm:overflow-hidden sm:hover:overflow-x-auto"
+			>
+				<div class="flex snap-x gap-5">
+					<div class="snap-center snap-always" *ngFor="let quiz of likedQuizs">
+						<quiz-card [quiz]="quiz"></quiz-card>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<a
+		routerLink="/new-quiz"
+		class="fixed bottom-9 right-10 h-10 w-10 text-purple-500 transition-colors"
+	>
+		<svg
+			viewBox="0 0 24 24"
+			class="h-10 w-10 motion-safe:animate-pulse"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+			<g
+				id="SVGRepo_tracerCarrier"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			></g>
+			<g id="SVGRepo_iconCarrier">
+				<g id="Edit / Add_Plus_Circle">
+					<path
+						id="Vector"
+						d="M8 12H12M12 12H16M12 12V16M12 12V8M12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					></path>
+				</g>
+			</g>
+		</svg>
+	</a>
+</div>

@@ -1,0 +1,41 @@
+{
+	"auth": {
+		"forgot-password": {
+			"description": "Don't worry. Reseting your password is easy. Just type your e-mail.",
+			"label": "Forgot password",
+			"remember": "Did you remember your password ?"
+		},
+		"login": { "register-label": "Don't have account yet ?" },
+		"register": {
+			"label": "Register",
+			"login-label": "Already have an account ?"
+		}
+	},
+	"form": {
+		"input": {
+			"label": {
+				"email": "Enter email",
+				"password": "Enter password",
+				"block": "Select a block",
+				"campus": "Select a campus",
+				"first-name": "First Name",
+				"last-name": "Last Name",
+				"passwordConfirmation": "Re-enter password",
+				"section": "Select a section",
+				"title": "Title",
+				"difficulty": "Difficulty",
+				"published": "Published",
+				"suspend": "Yes, suspend my account",
+				"hard": "Hard",
+				"medium": "Medium",
+				"easy": "Easy"
+			}
+		}
+	},
+	"my-profile": {
+		"navbar": {
+			"personnal": "Personnal Information",
+			"quiz-history": "Quiz History"
+		}
+	}
+}

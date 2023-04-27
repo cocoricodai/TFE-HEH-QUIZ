@@ -1,0 +1,93 @@
+<div class="mx-auto max-w-4xl">
+	<h3 class="text-xl">Quiz: {{ quizInformations.title }}</h3>
+	<hr class="mb-5 border-purple-500" />
+
+	<form
+		[formGroup]="secondStepForm"
+		(ngSubmit)="onAdd()"
+		class="mx-auto mt-5 grid max-w-xl grid-cols-1"
+	>
+		<div class="space-y-2">
+			<div class="items-input">
+				<label for="title">Title *</label>
+				<input
+					id="title"
+					type="text"
+					formControlName="title"
+					class="dark:text-black"
+					placeholder="This is my title"
+				/>
+			</div>
+
+			<div class="items-input-file">
+				<label for="image">Image</label>
+				<input
+					class="cursor-pointer border border-gray-300 bg-gray-50 text-xs text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
+					id="image"
+					type="file"
+					formControlName="image"
+					(change)="onFileSelected($event)"
+				/>
+			</div>
+
+			<div class="items-input">
+				<label for="correctAnswer">Correct Answer *</label>
+				<input
+					id="correctAnswer"
+					type="text"
+					formControlName="correctAnswer"
+					placeholder="True"
+					class="dark:text-black"
+				/>
+			</div>
+
+			<div class="items-input">
+				<label>Wrong Answer *</label>
+				<div class="flex flex-col space-y-2 dark:text-black">
+					<input
+						type="text"
+						formControlName="wrongAnswer1"
+						placeholder="False"
+					/>
+					<input
+						type="text"
+						formControlName="wrongAnswer2"
+						placeholder="I don't know"
+					/>
+					<input
+						type="text"
+						formControlName="wrongAnswer3"
+						placeholder="I don't understand"
+					/>
+				</div>
+			</div>
+
+			<div class="items-input">
+				<label for="points">Points *</label>
+				<div class="flex flex-col space-y-2">
+					<input
+						id="points"
+						type="number"
+						min="1"
+						max="10"
+						formControlName="points"
+						class="dark:text-black"
+					/>
+				</div>
+			</div>
+
+			<button [disabled]="secondStepForm.invalid" *ngIf="questions.length < 20">
+				Add Answer
+			</button>
+			<button *ngIf="questions.length >= 4" (click)="onSubmit()" type="button">
+				Submit
+			</button>
+		</div>
+	</form>
+
+	<div class="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-3">
+		<div *ngFor="let question of questions" class="rounded-2xl bg-white p-4">
+			<new-quiz-card [question]="question"></new-quiz-card>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,52 @@
+{
+	"name": "tfe-api-rest",
+	"version": "1.0.0",
+	"description": "API rest backend for my TFE ",
+	"main": "index.js",
+	"scripts": {
+		"start:dev": "set NODE_ENV=development&& node index.js",
+		"start:prod": "NODE_ENV=production node index.js",
+		"start:test": "set NODE_ENV=test&& node index.js",
+		"start:docker": "node index.js",
+		"dev": "set NODE_ENV=development&& nodemon index.js",
+		"format:check": "prettier --check .",
+		"format:write": "prettier --write .",
+		"lint:check": "eslint .",
+		"lint:fix": "eslint --fix .",
+		"test": "set NODE_ENV=development&& mocha --timeout 5000 ./test/**/*.test.js"
+	},
+	"keywords": [
+		"nodejs",
+		"express",
+		"api",
+		"rest"
+	],
+	"author": "Colin Depelsenaire",
+	"license": "ISC",
+	"homepage": "https://github.com/cocoricodai/TFE-HEH-QUIZ",
+	"dependencies": {
+		"bcrypt": "^5.1.0",
+		"body-parser": "^1.20.1",
+		"cookie-parser": "^1.4.6",
+		"cors": "^2.8.5",
+		"crypto": "^1.0.1",
+		"dotenv": "^16.0.3",
+		"express": "^4.18.2",
+		"express-rate-limit": "^6.7.0",
+		"i18n": "^0.15.1",
+		"jsonwebtoken": "^9.0.0",
+		"mariadb": "^3.0.2",
+		"nodemailer": "^6.8.0",
+		"sequelize": "^6.29.0",
+		"winston": "^3.8.2"
+	},
+	"devDependencies": {
+		"eslint": "^8.38.0",
+		"eslint-config-prettier": "^8.8.0",
+		"mocha": "^10.2.0",
+		"morgan": "^1.10.0",
+		"nodemon": "^2.0.20",
+		"prettier": "^2.8.7",
+		"supertest": "^6.3.3"
+	}
+}

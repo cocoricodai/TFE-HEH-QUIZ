@@ -1,0 +1,7 @@
+div a {
+	@apply rounded-lg px-3 py-2 text-sm font-semibold transition ease-in-out;
+}
+
+div a:hover {
+	@apply text-purple-500;
+}

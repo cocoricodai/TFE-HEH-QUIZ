@@ -1,0 +1,94 @@
+<form
+	[formGroup]="registerForm"
+	(ngSubmit)="register()"
+	class="flex flex-col space-y-3"
+>
+	<label for="email">
+		<input
+			id="email"
+			formControlName="email"
+			type="email"
+			placeholder="{{ 'form.input.label.email' | translate }}"
+			autofocus
+		/>
+	</label>
+	<div
+		*ngIf="
+			registerForm.get('email')?.invalid && registerForm.get('email')?.touched
+		"
+		class="error"
+	>
+		The e-mail must be from the HEH.
+	</div>
+
+	<label for="password">
+		<input
+			id="password"
+			formControlName="password"
+			type="password"
+			placeholder="{{ 'form.input.label.password' | translate }}"
+		/>
+	</label>
+	<div
+		*ngIf="
+			registerForm.get('password')?.invalid &&
+			registerForm.get('password')?.touched
+		"
+		class="error"
+	>
+		Your password must be between 7 and 15 characters long and include at least
+		one uppercase letter, one digit, and one special character from the
+		following list: !@#%.
+	</div>
+
+	<label for="passwordConfirmation">
+		<input
+			id="passwordConfirmation"
+			formControlName="passwordConfirmation"
+			type="password"
+			placeholder="{{ 'form.input.label.passwordConfirmation' | translate }}"
+		/>
+	</label>
+	<div
+		*ngIf="registerForm.errors?.['passwordMismatchError'] && registerForm.get('passwordConfirmation')?.touched"
+		class="error"
+	>
+		Password must match
+	</div>
+
+	<select formControlName="campus_id" (change)="onSelectCampus($event.target)">
+		<option value="">-- {{ 'form.input.label.campus' | translate }} --</option>
+		<option *ngFor="let campus of campusList" [value]="campus.id">
+			{{ campus.name }}
+		</option>
+	</select>
+
+	<ng-container *ngIf="!isTeacher">
+		<select
+			formControlName="section_id"
+			(change)="onSelectSection($event.target)"
+		>
+			<option value="">
+				-- {{ 'form.input.label.section' | translate }} --
+			</option>
+			<option *ngFor="let section of sections" [value]="section.id">
+				{{ section.name }}
+			</option>
+		</select>
+
+		<select formControlName="block_id">
+			<option value="">-- {{ 'form.input.label.block' | translate }} --</option>
+			<option *ngFor="let block of blocks" [value]="block.id">
+				{{ block.name }}
+			</option>
+		</select>
+	</ng-container>
+
+	<button
+		type="submit"
+		class="disabled:bg-purple-400"
+		[disabled]="registerForm.invalid"
+	>
+		{{ 'auth.register.label' | translate }}
+	</button>
+</form>

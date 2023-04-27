@@ -1,0 +1,42 @@
+.items-input,
+.items-input-file {
+	@apply flex flex-col;
+}
+
+.items-input label,
+.items-input-file label {
+	@apply mb-1 text-sm;
+}
+
+.items-input input,
+.items-input textarea {
+	@apply rounded-lg border border-gray-300 px-2 py-1;
+}
+
+.items-input input.isEditable,
+.items-input select.isEditable {
+	@apply border-2 border-purple-400;
+}
+
+input {
+	@apply bg-white;
+}
+
+input:focus,
+textarea:focus {
+	@apply z-10 border-purple-500 outline-none ring-purple-500;
+}
+
+button {
+	@apply relative flex w-full justify-center rounded-md border border-transparent bg-purple-600 py-2 px-4 text-sm font-medium text-white;
+}
+
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+	@apply border-red-500;
+}
+
+select {
+	@apply block w-full rounded-lg border border-gray-300 bg-white p-2 text-sm text-gray-900  focus:z-10 focus:border-purple-500 focus:outline-none focus:ring-purple-500;
+}

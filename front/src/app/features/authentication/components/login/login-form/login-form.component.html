@@ -1,0 +1,38 @@
+<form
+	[formGroup]="loginForm"
+	(ngSubmit)="login()"
+	class="relative flex flex-col space-y-3"
+>
+	<label for="email">
+		<input
+			id="email"
+			formControlName="email"
+			type="email"
+			placeholder="{{ 'form.input.label.email' | translate }}"
+			autofocus
+		/>
+	</label>
+
+	<label for="password">
+		<input
+			id="password"
+			formControlName="password"
+			type="password"
+			placeholder="{{ 'form.input.label.password' | translate }}"
+		/>
+	</label>
+
+	<a
+		class="font-semibold text-purple-600 hover:text-purple-700"
+		[routerLink]="['/auth/forgot-password']"
+		>{{ 'auth.forgot-password.label' | translate }} ?</a
+	>
+
+	<button
+		type="submit"
+		class="disabled:bg-purple-400"
+		[disabled]="loginForm.invalid"
+	>
+		Login
+	</button>
+</form>

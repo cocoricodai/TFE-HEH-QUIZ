@@ -1,0 +1,18 @@
+<div class="flex justify-center">
+	<label
+		for="dark-mode-toggle"
+		class="relative mx-3 inline-flex cursor-pointer items-center"
+	>
+		<input
+			(change)="onDarkModeToggle()"
+			[checked]="isToggle"
+			type="checkbox"
+			class="peer sr-only"
+			id="dark-mode-toggle"
+			#toggle
+		/>
+		<div
+			class="peer h-6 w-11 rounded-full border-2 border-gray-200 bg-white after:absolute after:top-[2px] after:left-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-slate-800 after:transition-all after:content-[''] focus:outline-none peer-checked:after:translate-x-full peer-checked:after:border-white dark:border-gray-600 dark:bg-purple-500 dark:after:bg-white"
+		></div>
+	</label>
+</div>

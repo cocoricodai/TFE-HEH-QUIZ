@@ -1,0 +1,61 @@
+<div class="grid gap-10 sm:grid-cols-2">
+	<form
+		*ngIf="quizModifyForm"
+		[formGroup]="quizModifyForm"
+		class="flex flex-col justify-around"
+	>
+		<div class="items-input">
+			<label for="title">Title *</label>
+			<input
+				id="title"
+				type="text"
+				formControlName="title"
+				class="dark:text-black"
+			/>
+		</div>
+
+		<div class="items-input">
+			<label for="description">Description *</label>
+			<input
+				id="description"
+				type="text"
+				formControlName="description"
+				class="dark:text-black"
+			/>
+		</div>
+
+		<div class="items-input">
+			<label for="difficulty">Difficulty *</label>
+			<select
+				id="difficulty"
+				class="dark:text-black"
+				formControlName="difficulty"
+			>
+				<option value="easy">Easy</option>
+				<option value="medium">Medium</option>
+				<option value="hard">Hard</option>
+			</select>
+		</div>
+
+		<div class="items-input">
+			<label for="tags">Tags (separate with a comma)</label>
+			<input
+				id="tags"
+				type="text"
+				formControlName="tags"
+				class="dark:text-black"
+			/>
+		</div>
+
+		<div class="items-chekbox flex items-center">
+			<input
+				id="isPublished"
+				type="checkbox"
+				formControlName="isPublished"
+				class="h-4 w-4 rounded text-purple-400 focus:ring-purple-400 dark:text-purple-400"
+			/>
+			<label for="isPublished" class="ml-2">Published</label>
+		</div>
+	</form>
+	<chart-line></chart-line>
+</div>

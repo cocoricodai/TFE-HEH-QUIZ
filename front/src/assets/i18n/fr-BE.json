@@ -1,0 +1,42 @@
+{
+	"auth": {
+		"forgot-password": {
+			"description": "Ne vous inquiétez pas. Réinitialiser votre mot de passe est facile. Tapez simplement votre e-mail.",
+			"label": "Mot de passe oublié",
+			"remember": "Vous vous souvenez de votre mot de passe ?"
+		},
+		"login": { "register-label": "Vous n'avez pas encore de compte ?" },
+		"register": {
+			"label": "S'enregistrer",
+			"login-label": "Vous avez déja un compte ?"
+		}
+	},
+	"form": {
+		"input": {
+			"label": {
+				"email": "Entrer votre mail",
+				"password": "Entrer votre mot de passe",
+				"block": "Selectionner un block",
+				"campus": "Selectionner un campus",
+				"first-name": "Prénom",
+				"last-name": "Nom",
+				"passwordConfirmation": "Entrer à nouveau votre mot de passe",
+				"section": "Selectionner une section",
+				"title": "Titre",
+				"difficulty": "Difficulté",
+				"published": "Public",
+				"suspend": "Oui, suspendre mon compte",
+				"hard": "Difficile",
+				"medium": "Moyen",
+				"easy": "Facile",
+				"next": "Suivant"
+			}
+		}
+	},
+	"my-profile": {
+		"navbar": {
+			"personnal": "Informations personnelles",
+			"quiz-history": "Historique des quiz"
+		}
+	}
+}

@@ -1,0 +1,127 @@
+<div>
+	<div
+		backButton
+		class="inline-flex items-center rounded-full bg-purple-500 px-3 py-1 text-white hover:cursor-pointer dark:bg-purple-700"
+	>
+		<svg
+			width="20px"
+			viewBox="0 0 1024 1024"
+			xmlns="http://www.w3.org/2000/svg"
+			fill="currentColor"
+		>
+			<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+			<g
+				id="SVGRepo_tracerCarrier"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			></g>
+			<g id="SVGRepo_iconCarrier">
+				<path
+					fill="currentColor"
+					d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"
+				></path>
+				<path
+					fill="currentColor"
+					d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"
+				></path>
+			</g>
+		</svg>
+		<button class="self-center">Back</button>
+	</div>
+
+	<div *ngIf="quiz">
+		<div class="text-center">
+			<div class="text-sm text-gray-600 dark:text-gray-300">
+				<p>
+					{{ quiz.createdAt | date : 'dd/MM/yy' }}
+				</p>
+				<p>
+					<a
+						class="cursor-pointer hover:text-purple-500"
+						(click)="navigateOnProfile()"
+					>
+						{{
+							quiz.profile?.firstName +
+								' ' +
+								quiz.profile?.lastName +
+								' | ' +
+								quiz.profile?.role?.name
+						}}
+					</a>
+				</p>
+			</div>
+			<div class="p-5">
+				<p>
+					<a (click)="clickOnHeart()" class="inline-flex cursor-pointer gap-2">
+						<p>{{ quiz.likes.count }} Likes</p>
+						<svg
+							width="16"
+							viewBox="0 0 1024 1024"
+							class="icon"
+							version="1.1"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<g>
+								<path
+									*ngIf="quiz.likes?.isLiked"
+									d="M725.333333 192c-89.6 0-168.533333 44.8-213.333333 115.2C467.2 236.8 388.266667 192 298.666667 192 157.866667 192 42.666667 307.2 42.666667 448c0 253.866667 469.333333 512 469.333333 512s469.333333-256 469.333333-512c0-140.8-115.2-256-256-256z"
+									fill="#F44336"
+								></path>
+								<path
+									*ngIf="!quiz.likes?.isLiked"
+									d="M725.333333 192c-89.6 0-168.533333 44.8-213.333333 115.2C467.2 236.8 388.266667 192 298.666667 192 157.866667 192 42.666667 307.2 42.666667 448c0 253.866667 469.333333 512 469.333333 512s469.333333-256 469.333333-512c0-140.8-115.2-256-256-256z"
+									fill="none"
+									stroke-width="40"
+									stroke="currentColor"
+								></path>
+							</g>
+						</svg>
+					</a>
+				</p>
+				<h3 class="text-4xl font-semibold">{{ quiz.title }}</h3>
+				<p class="text-lg">{{ quiz.description }}</p>
+				<div *ngIf="quiz?.tags" class="inline-flex gap-1 pt-2">
+					<ng-container *ngFor="let tag of quiz?.tags">
+						<p
+							class="rounded-lg bg-gray-200 px-3 py-1 text-xs dark:bg-purple-700"
+						>
+							#{{ tag }}
+						</p>
+					</ng-container>
+				</div>
+			</div>
+
+			<a
+				class="mx-auto inline-block cursor-pointer rounded-lg bg-purple-500 py-1 px-20 text-white dark:bg-purple-700"
+				(click)="onStartQuiz()"
+				>Start</a
+			>
+		</div>
+	</div>
+</div>
+
+<!-- <ng-container *ngIf="quiz">
+	
+
+		<div class="flex items-center justify-between text-xs text-gray-600">
+			<div class="h-2.5 w-[300px] rounded-full bg-gray-200 dark:bg-gray-300">
+				<div
+					*ngIf="quiz.difficulty == 'easy'"
+					class="h-2.5 rounded-full bg-green-600"
+					style="width: 33%"
+				></div>
+				<div
+					*ngIf="quiz.difficulty == 'medium'"
+					class="h-2.5 rounded-full bg-orange-600"
+					style="width: 67%"
+				></div>
+				<div
+					*ngIf="quiz.difficulty == 'hard'"
+					class="h-2.5 rounded-full bg-red-600"
+					style="width: 100%"
+				></div>
+			</div>
+	</div>
+
+		
+</ng-container>-->

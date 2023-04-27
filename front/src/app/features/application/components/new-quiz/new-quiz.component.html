@@ -1,0 +1,12 @@
+<div class="mx-auto max-w-5xl p-5">
+	<feature-new-quiz-first-step
+		*ngIf="currentStep === 1"
+		(firstStep)="firstStepForm($event)"
+	></feature-new-quiz-first-step>
+
+	<feature-new-quiz-second-step
+		*ngIf="currentStep === 2"
+		[quizInformations]="quiz"
+		(secondStep)="secondStepForm($event)"
+	></feature-new-quiz-second-step>
+</div>

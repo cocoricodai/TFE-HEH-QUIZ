@@ -1,0 +1,105 @@
+<div class="mx-auto max-w-4xl">
+	<h3 class="text-xl">New quiz</h3>
+	<hr class="mb-5 border-purple-500" />
+	<form
+		[formGroup]="firstStepForm"
+		(ngSubmit)="onSubmit()"
+		class="grid gap-5 sm:grid-cols-2"
+	>
+		<div class="items-input">
+			<label for="title">{{ 'form.input.label.title' | translate }} *</label>
+			<input
+				id="title"
+				type="text"
+				formControlName="title"
+				class="dark:text-black"
+			/>
+		</div>
+
+		<div class="items-input col-span-2">
+			<label for="description">Description *</label>
+			<textarea
+				id="description"
+				type="text"
+				formControlName="description"
+				class="dark:text-black"
+			></textarea>
+		</div>
+
+		<div class="items-input">
+			<label for="difficulty"
+				>{{ 'form.input.label.difficulty' | translate }} *</label
+			>
+			<select
+				id="difficulty"
+				formControlName="difficulty"
+				class="dark:text-black"
+			>
+				<option value="easy">{{ 'form.input.label.easy' | translate }}</option>
+				<option value="medium">
+					{{ 'form.input.label.medium' | translate }}
+				</option>
+				<option value="hard">{{ 'form.input.label.hard' | translate }}</option>
+			</select>
+		</div>
+
+		<div class="items-input">
+			<label for="tags">Tags (separate with a comma)</label>
+			<input
+				id="tags"
+				type="text"
+				formControlName="tags"
+				class="dark:text-black"
+			/>
+		</div>
+
+		<ng-container *ngIf="isTeacher">
+			<div class="items-input">
+				<label for="section">Section *</label>
+				<select
+					id="section"
+					formControlName="section_id"
+					(change)="onSelectSection($event.target)"
+				>
+					<option value="">
+						-- {{ 'form.input.label.section' | translate }} --
+					</option>
+					<option *ngFor="let section of sections" [value]="section.id">
+						{{ section.name }}
+					</option>
+				</select>
+			</div>
+			<div class="items-input">
+				<label for="block">Block *</label>
+				<select formControlName="block_id">
+					<option value="">
+						-- {{ 'form.input.label.block' | translate }} --
+					</option>
+					<option *ngFor="let block of blocks" [value]="block.id">
+						{{ block.name }}
+					</option>
+				</select>
+			</div>
+		</ng-container>
+
+		<div class="items-chekbox flex items-center">
+			<input
+				id="isPublished"
+				type="checkbox"
+				formControlName="isPublished"
+				class="h-4 w-4 rounded text-purple-400 focus:ring-purple-400 dark:text-purple-400"
+			/>
+			<label for="isPublished" class="ml-2">{{
+				'form.input.label.published' | translate
+			}}</label>
+		</div>
+
+		<button
+			type="submit"
+			class="disabled:bg-purple-400"
+			[disabled]="firstStepForm.invalid"
+		>
+			{{ 'form.input.label.next' | translate }}
+		</button>
+	</form>
+</div>

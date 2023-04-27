@@ -1,0 +1,103 @@
+<div
+	(click)="onSelectQuiz()"
+	class="w-[350px].[500px] relative flex h-full w-[430px] cursor-pointer flex-col justify-between rounded-lg border-2 bg-white p-5 text-black hover:border-black hover:border-opacity-70"
+	[class.isTeacher]="isTeacher()"
+>
+	<div class="flex items-center justify-between pb-3 text-xs text-gray-500">
+		<div class="inline-flex">
+			<p class="font-bold text-red-500">{{ quiz.likes.count }}</p>
+			<svg
+				width="16"
+				viewBox="0 0 1024 1024"
+				class="icon"
+				version="1.1"
+				xmlns="http://www.w3.org/2000/svg"
+				fill="#000000"
+			>
+				<g>
+					<path
+						d="M725.333333 192c-89.6 0-168.533333 44.8-213.333333 115.2C467.2 236.8 388.266667 192 298.666667 192 157.866667 192 42.666667 307.2 42.666667 448c0 253.866667 469.333333 512 469.333333 512s469.333333-256 469.333333-512c0-140.8-115.2-256-256-256z"
+						fill="#F44336"
+					></path>
+				</g>
+			</svg>
+		</div>
+
+		<div class="flex items-center justify-between text-xs text-gray-600">
+			<div class="h-2.5 w-[100px] rounded-full bg-gray-200 dark:bg-gray-300">
+				<div
+					*ngIf="quiz.difficulty == 'easy'"
+					class="h-2.5 rounded-full bg-green-600"
+					style="width: 33%"
+				></div>
+				<div
+					*ngIf="quiz.difficulty == 'medium'"
+					class="h-2.5 rounded-full bg-orange-600"
+					style="width: 67%"
+				></div>
+				<div
+					*ngIf="quiz.difficulty == 'hard'"
+					class="h-2.5 rounded-full bg-red-600"
+					style="width: 100%"
+				></div>
+			</div>
+		</div>
+	</div>
+
+	<div>
+		<h3 class="text-xl font-semibold">{{ quiz.title }}</h3>
+		<p>{{ quiz.description }}</p>
+		<div class="inline-flex gap-1 pt-2">
+			<ng-container *ngFor="let tag of quiz?.tags">
+				<p class="rounded-lg bg-gray-200 px-3 py-1 text-xs">#{{ tag }}</p>
+			</ng-container>
+		</div>
+	</div>
+
+	<div class="mt-5 text-xs text-gray-600">
+		<div class="flex justify-between">
+			<div class="inline-flex items-center">
+				<svg
+					_ngcontent-pwm-c61=""
+					width="16px"
+					viewBox="0 0 24 24"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<g _ngcontent-pwm-c61="" id="SVGRepo_bgCarrier" stroke-width="0"></g>
+					<g
+						_ngcontent-pwm-c61=""
+						id="SVGRepo_tracerCarrier"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					></g>
+					<g _ngcontent-pwm-c61="" id="SVGRepo_iconCarrier">
+						<path
+							_ngcontent-pwm-c61=""
+							fill-rule="evenodd"
+							clip-rule="evenodd"
+							d="M16.5 7.063C16.5 10.258 14.57 13 12 13c-2.572 0-4.5-2.742-4.5-5.938C7.5 3.868 9.16 2 12 2s4.5 1.867 4.5 5.063zM4.102 20.142C4.487 20.6 6.145 22 12 22c5.855 0 7.512-1.4 7.898-1.857a.416.416 0 0 0 .09-.317C19.9 18.944 19.106 15 12 15s-7.9 3.944-7.989 4.826a.416.416 0 0 0 .091.317z"
+							fill="currentColor"
+						></path>
+					</g>
+				</svg>
+				<p class="ml-1">
+					{{
+						quiz.profile?.firstName +
+							' ' +
+							quiz.profile?.lastName +
+							' | ' +
+							quiz.profile?.role?.name
+					}}
+				</p>
+			</div>
+			<p class="">{{ quiz.createdAt | date : 'dd/MM/yy' }}</p>
+		</div>
+	</div>
+
+	<div
+		class="absolute top-0 left-0 flex h-full w-full items-center justify-center rounded-lg bg-black bg-opacity-70 text-3xl font-bold uppercase text-white opacity-0 hover:opacity-100"
+	>
+		View
+	</div>
+</div>

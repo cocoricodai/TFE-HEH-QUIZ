@@ -1,0 +1,92 @@
+<div class="flex items-center justify-center py-10 px-4 sm:px-6 lg:px-0">
+	<div
+		class="flex w-full items-center justify-between text-gray-600 dark:text-white lg:w-3/5"
+	>
+		<button
+			(click)="onPrevious()"
+			class="flex cursor-pointer items-center pt-3 hover:text-purple-700 disabled:invisible"
+			[disabled]="currentPage == 1"
+		>
+			<svg
+				width="14"
+				height="8"
+				viewBox="0 0 14 8"
+				fill="none"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<path
+					d="M1.1665 4H12.8332"
+					stroke="currentColor"
+					stroke-width="1.25"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				/>
+				<path
+					d="M1.1665 4L4.49984 7.33333"
+					stroke="currentColor"
+					stroke-width="1.25"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				/>
+				<path
+					d="M1.1665 4.00002L4.49984 0.666687"
+					stroke="currentColor"
+					stroke-width="1.25"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				/>
+			</svg>
+			<p class="ml-3 text-sm font-medium leading-none">Previous</p>
+		</button>
+		<div class="hidden sm:flex">
+			<a
+				*ngFor="let page of pages"
+				(click)="goOnPage(page)"
+				class="mr-4 cursor-pointer border-t border-transparent px-2 pt-3 text-sm font-medium leading-none hover:border-purple-400 hover:text-purple-700"
+				[ngClass]="
+					page == currentPage
+						? 'border-t-purple-400  text-purple-700 dark:text-purple-400'
+						: ''
+				"
+			>
+				{{ page }}
+			</a>
+		</div>
+		<button
+			(click)="onNext()"
+			class="flex cursor-pointer items-center pt-3 hover:text-purple-700 disabled:invisible"
+			[disabled]="currentPage == totalPages"
+		>
+			<p class="mr-3 text-sm font-medium leading-none">Next</p>
+			<svg
+				width="14"
+				height="8"
+				viewBox="0 0 14 8"
+				fill="none"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<path
+					d="M1.1665 4H12.8332"
+					stroke="currentColor"
+					stroke-width="1.25"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				/>
+				<path
+					d="M9.5 7.33333L12.8333 4"
+					stroke="currentColor"
+					stroke-width="1.25"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				/>
+				<path
+					d="M9.5 0.666687L12.8333 4.00002"
+					stroke="currentColor"
+					stroke-width="1.25"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				/>
+			</svg>
+		</button>
+	</div>
+</div>

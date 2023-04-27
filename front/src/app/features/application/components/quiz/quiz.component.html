@@ -1,0 +1,13 @@
+<div class="mx-auto max-w-5xl p-5">
+	<quiz-first-step
+		*ngIf="currentStep === 1"
+		[quiz]="quiz"
+		(startQuiz)="startQuiz()"
+	></quiz-first-step>
+
+	<quiz-second-step
+		*ngIf="currentStep === 2"
+		[quiz]="quiz"
+		(endQuiz)="endQuiz()"
+	></quiz-second-step>
+</div>

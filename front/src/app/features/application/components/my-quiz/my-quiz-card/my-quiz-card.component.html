@@ -1,0 +1,40 @@
+<div
+	class="relative flex cursor-pointer rounded-lg dark:border-black"
+	(click)="onSelectQuiz(quiz)"
+>
+	<div
+		class="flex w-[350px] items-center justify-center rounded-l-lg border-2 border-purple-900 bg-purple-900 p-5 text-white"
+	>
+		<p class="text-xl font-semibold">{{ quiz.title }}</p>
+	</div>
+	<div
+		class="w-full rounded-r-lg border-2 border-l-transparent bg-white p-5 dark:border-0 dark:text-black"
+	>
+		<div class="flex items-center justify-between">
+			<p class="text-sm">Difficulty</p>
+			<div class="h-2.5 w-6/12 rounded-full bg-gray-200 dark:bg-gray-300">
+				<div
+					*ngIf="quiz.difficulty == 'easy'"
+					class="h-2.5 rounded-full bg-green-600"
+					style="width: 33%"
+				></div>
+				<div
+					*ngIf="quiz.difficulty == 'medium'"
+					class="h-2.5 rounded-full bg-orange-600"
+					style="width: 67%"
+				></div>
+				<div
+					*ngIf="quiz.difficulty == 'hard'"
+					class="h-2.5 rounded-full bg-red-600"
+					style="width: 100%"
+				></div>
+			</div>
+		</div>
+		<p class="mt-1 text-xl font-semibold">{{ quiz.description }}</p>
+	</div>
+	<div
+		class="absolute flex h-full w-full items-center justify-center rounded-lg bg-black bg-opacity-70 text-3xl font-bold uppercase text-white opacity-0 hover:opacity-100"
+	>
+		Modify
+	</div>
+</div>

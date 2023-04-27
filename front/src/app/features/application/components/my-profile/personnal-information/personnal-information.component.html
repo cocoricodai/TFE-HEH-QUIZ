@@ -1,0 +1,264 @@
+<div class="py-10 px-5">
+	<div class="flex justify-between text-purple-600 dark:text-purple-500">
+		<h3 class="text-xl">{{ 'my-profile.navbar.personnal' | translate }}</h3>
+		<a (click)="onEdit()" class="hover:cursor-pointer"
+			><svg
+				viewBox="0 0 24 24"
+				height="20"
+				fill="none"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+				<g
+					id="SVGRepo_tracerCarrier"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				></g>
+				<g id="SVGRepo_iconCarrier">
+					<path
+						d="M13 21H21"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					></path>
+					<path
+						d="M20.0651 7.39423L7.09967 20.4114C6.72438 20.7882 6.21446 21 5.68265 21H4.00383C3.44943 21 3 20.5466 3 19.9922V18.2987C3 17.7696 3.20962 17.2621 3.58297 16.8873L16.5517 3.86681C19.5632 1.34721 22.5747 4.87462 20.0651 7.39423Z"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					></path>
+					<path
+						d="M15.3096 5.30981L18.7273 8.72755"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					></path>
+					<path
+						opacity="0.1"
+						d="M18.556 8.90942L7.09967 20.4114C6.72438 20.7882 6.21446 21 5.68265 21H4.00383C3.44943 21 3 20.5466 3 19.9922V18.2987C3 17.7696 3.20962 17.2621 3.58297 16.8873L15.0647 5.35974C15.0742 5.4062 15.0969 5.45049 15.1329 5.48653L18.5506 8.90426C18.5524 8.90601 18.5542 8.90773 18.556 8.90942Z"
+						fill="currentColor"
+					></path>
+				</g></svg
+		></a>
+	</div>
+
+	<hr class="mb-5 border-purple-500" />
+	<form
+		[formGroup]="profileForm"
+		(ngSubmit)="onUpdateProfile()"
+		class="grid gap-5 sm:grid-cols-2"
+	>
+		<div class="items-input">
+			<label for="firstName">{{
+				'form.input.label.first-name' | translate
+			}}</label>
+			<input
+				id="firstName"
+				formControlName="firstName"
+				[class.isEditable]="isEditable"
+				type="text"
+				class="dark:text-black"
+			/>
+		</div>
+
+		<div class="items-input">
+			<label for="lastName">{{
+				'form.input.label.last-name' | translate
+			}}</label>
+			<input
+				id="lastName"
+				formControlName="lastName"
+				[class.isEditable]="isEditable"
+				type="text"
+				class="dark:text-black"
+			/>
+		</div>
+
+		<div class="items-input sm:col-span-2">
+			<label for="email">Email</label>
+			<input
+				id="email"
+				type="email"
+				[value]="user.email"
+				[disabled]="true"
+				class="dark:text-black"
+			/>
+		</div>
+
+		<div class="items-input">
+			<label>Role</label>
+			<input
+				type="text"
+				[value]="user.profile.role.name"
+				[disabled]="true"
+				class="dark:text-black"
+			/>
+		</div>
+
+		<div class="items-input">
+			<label for="campus">Campus</label>
+			<input
+				*ngIf="!isEditable"
+				type="text"
+				[value]="user.profile.campus.name"
+				[disabled]="!isEditable"
+				class="dark:text-black"
+			/>
+			<select
+				[class.hidden]="!isEditable"
+				(change)="onSelectCampus($event.target)"
+				formControlName="campus_id"
+				id="campus"
+				class="isEditable"
+			>
+				<option *ngFor="let campus of campusList" [value]="campus.id">
+					{{ campus.name }}
+				</option>
+			</select>
+		</div>
+
+		<ng-container *ngIf="isStudent()">
+			<div class="items-input">
+				<label for="section">Section</label>
+				<input
+					*ngIf="!isEditable"
+					type="text"
+					[value]="user.profile.section.name"
+					[disabled]="!isEditable"
+					class="dark:text-black"
+				/>
+				<select
+					[class.hidden]="!isEditable"
+					(change)="onSelectSection($event.target)"
+					formControlName="section_id"
+					id="section"
+					class="isEditable"
+				>
+					<option *ngFor="let section of sections" [value]="section.id">
+						{{ section.name }}
+					</option>
+				</select>
+			</div>
+
+			<div class="items-input">
+				<label for="block">Block</label>
+				<input
+					*ngIf="!isEditable"
+					type="text"
+					[value]="user.profile.block.name"
+					[disabled]="!isEditable"
+					class="dark:text-black"
+				/>
+				<select
+					[class.hidden]="!isEditable"
+					id="block"
+					formControlName="block_id"
+					class="isEditable"
+				>
+					<option *ngFor="let block of blocks" [value]="block.id">
+						{{ block.name }}
+					</option>
+				</select>
+			</div>
+		</ng-container>
+
+		<button *ngIf="isEditable" [disabled]="profileForm.invalid">Confirm</button>
+	</form>
+</div>
+
+<div class="px-5 pb-10">
+	<h3 class="text-xl text-purple-600 dark:text-purple-500">
+		{{ 'Password' | translate }}
+	</h3>
+	<hr class="mb-5 border-purple-500" />
+	<div class="grid gap-5 sm:grid-cols-2 sm:gap-10">
+		<div>Update your password associated with your account.</div>
+		<form
+			[formGroup]="passwordForm"
+			(ngSubmit)="onUpdatePassword()"
+			class="grid grid-cols-1 gap-5"
+		>
+			<div class="items-input">
+				<label for="password">{{
+					'form.input.label.password' | translate
+				}}</label>
+				<input
+					id="password"
+					formControlName="password"
+					type="password"
+					class="dark:text-black"
+				/>
+				<div
+					*ngIf="
+						passwordForm.get('password')?.invalid &&
+						passwordForm.get('password')?.touched
+					"
+					class="error"
+				>
+					Your password must be between 7 and 15 characters long and include at
+					least one uppercase letter, one digit, and one special character from
+					the following list: !@#%.
+				</div>
+			</div>
+
+			<div class="items-input">
+				<label for="passwordConfirmation">{{
+					'form.input.label.passwordConfirmation' | translate
+				}}</label>
+				<input
+					id="passwordConfirmation"
+					formControlName="passwordConfirmation"
+					type="password"
+					class="dark:text-black"
+				/>
+				<div
+					*ngIf="passwordForm.errors?.['passwordMismatchError'] && passwordForm.get('passwordConfirmation')?.touched"
+					class="error"
+				>
+					Password must match
+				</div>
+			</div>
+
+			<button *ngIf="passwordForm.valid">Confirm</button>
+		</form>
+	</div>
+</div>
+
+<div class="px-5 pb-10">
+	<h3 class="text-xl text-purple-600 dark:text-purple-500">
+		{{ 'Langage' | translate }}
+	</h3>
+	<hr class="mb-5 border-purple-500" />
+	<div class="grid gap-5 sm:grid-cols-2 sm:gap-10">
+		<div>You can change the default language</div>
+		<div>
+			<select (change)="languageChanged($event.target)" [value]="getlanguage()">
+				<option name="fr-BE" value="fr-BE">Français (fr-BE)</option>
+				<option name="en-US" value="en-US">English (en-US)</option>
+			</select>
+		</div>
+	</div>
+</div>
+
+<div class="px-5">
+	<h3 class="text-xl text-purple-600 dark:text-purple-500">
+		{{ 'Suspend account' | translate }}
+	</h3>
+	<hr class="mb-5 border-purple-500" />
+	<div class="grid gap-5 sm:grid-cols-2 sm:gap-10">
+		<div>
+			No longer want to use our service? You can suspend your account here.
+		</div>
+		<div>
+			<div
+				class="inline-block cursor-pointer rounded-lg border-none bg-red-600 px-4 py-2 text-white hover:bg-red-500"
+				(click)="suspendAccount()"
+			>
+				{{ 'form.input.label.suspend' | translate }}
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,27 @@
+:host {
+	padding: initial !important;
+	width: initial !important;
+	margin: initial !important;
+	line-height: 20px !important;
+	display: block;
+	background-color: transparent;
+	border-radius: 10px !important;
+	margin: 0 0 10px 0 !important;
+	box-shadow: none !important;
+}
+
+.success {
+	@apply border-green-500 bg-green-50 text-green-600;
+}
+
+.error {
+	@apply border-red-500 bg-red-50 text-red-600;
+}
+
+.warning {
+	@apply border-orange-500 bg-orange-50 text-orange-600;
+}
+
+.info {
+	@apply border-blue-500 bg-blue-50 text-blue-600;
+}

@@ -1,0 +1,13 @@
+<div
+	class="rounded-lg col-span-2 p-4 bg-white dark:bg-slate-600 flex justify-between items-center border-b-2 {{
+		colorBorder
+	}}"
+>
+	<div>
+		<p class="font-bold">{{ number | numberCountFormat }}</p>
+		<p>{{ title }}</p>
+	</div>
+	<div class="w-10 h-10 {{ color }}">
+		<ng-container *ngTemplateOutlet="myTemplate"></ng-container>
+	</div>
+</div>
