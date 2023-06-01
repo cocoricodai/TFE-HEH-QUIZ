@@ -3,4 +3,22 @@
 		{{ 'my-profile.navbar.quiz-history' | translate }}
 	</h3>
 	<hr class="mb-5 border-purple-500" />
+	<div>
+		<div
+			*ngFor="let result of results"
+			class="odd:bg-gray-200 odd:dark:bg-purple-600"
+		>
+			<div class="grid grid-cols-3 py-2 text-center">
+				<div>
+					<a
+						class="cursor-pointer hover:text-purple-400 hover:underline hover:dark:text-black"
+						(click)="navigateOnQuiz(result.quiz_id)"
+						>{{ result.title }}</a
+					>
+				</div>
+				<div>{{ result.createdAt | date : 'dd MMMM yyyy, HH:mm' }}</div>
+				<div>{{ result.score }} / {{ result.total }}</div>
+			</div>
+		</div>
+	</div>
 </div>

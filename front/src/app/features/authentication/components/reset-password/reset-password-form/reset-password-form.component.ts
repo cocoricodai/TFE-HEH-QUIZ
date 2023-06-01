@@ -6,11 +6,13 @@ import {
 	Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
 import { AuthenticationApiService } from 'src/app/core/services/api/authentication-api.service';
 import { LoadingService } from 'src/app/shared/loading/services/loading.service';
 
+@UntilDestroy()
 @Component({
 	selector: 'feature-reset-password-form-component',
 	templateUrl: './reset-password-form.component.html',
@@ -75,10 +77,13 @@ export class ResetPasswordForm implements OnInit {
 		const payload = { ...password, token: this._token };
 		this._authenticationApiService
 			.resetPassword(payload)
-			.pipe(finalize(() => this._loadingService.stopLoading()))
+			.pipe(
+				untilDestroyed(this),
+				finalize(() => this._loadingService.stopLoading())
+			)
 			.subscribe({
-				next: () => {
-					this._toastr.success('Password changed !');
+				next: (el) => {
+					this._toastr.success(el?.message);
 					this._router.navigate(['/auth/login']);
 				},
 				error: (err) => {

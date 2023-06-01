@@ -1,61 +1,168 @@
-<div class="grid gap-10 sm:grid-cols-2">
-	<form
-		*ngIf="quizModifyForm"
-		[formGroup]="quizModifyForm"
-		class="flex flex-col justify-around"
-	>
-		<div class="items-input">
-			<label for="title">Title *</label>
-			<input
-				id="title"
-				type="text"
-				formControlName="title"
-				class="dark:text-black"
-			/>
-		</div>
+<div class="relative" *ngIf="quiz">
+	<div class="grid gap-10 sm:grid-cols-2">
+		<form [formGroup]="quizModifyForm" class="flex flex-col justify-around">
+			<div class="items-input">
+				<label for="title">{{ 'form.input.label.title' | translate }} *</label>
+				<input
+					id="title"
+					type="text"
+					formControlName="title"
+					class="dark:text-black"
+				/>
+			</div>
 
-		<div class="items-input">
-			<label for="description">Description *</label>
-			<input
-				id="description"
-				type="text"
-				formControlName="description"
-				class="dark:text-black"
-			/>
-		</div>
+			<div class="items-input">
+				<label for="description">Description *</label>
+				<input
+					id="description"
+					type="text"
+					formControlName="description"
+					class="dark:text-black"
+				/>
+			</div>
 
-		<div class="items-input">
-			<label for="difficulty">Difficulty *</label>
-			<select
-				id="difficulty"
-				class="dark:text-black"
-				formControlName="difficulty"
-			>
-				<option value="easy">Easy</option>
-				<option value="medium">Medium</option>
-				<option value="hard">Hard</option>
-			</select>
-		</div>
+			<div class="items-input">
+				<label for="difficulty"
+					>{{ 'form.input.label.difficulty' | translate }} *</label
+				>
+				<select
+					id="difficulty"
+					class="dark:text-black"
+					formControlName="difficulty"
+				>
+					<option value="easy">
+						{{ 'form.input.label.easy' | translate }}
+					</option>
+					<option value="medium">
+						{{ 'form.input.label.medium' | translate }}
+					</option>
+					<option value="hard">
+						{{ 'form.input.label.hard' | translate }}
+					</option>
+				</select>
+			</div>
 
-		<div class="items-input">
-			<label for="tags">Tags (separate with a comma)</label>
-			<input
-				id="tags"
-				type="text"
-				formControlName="tags"
-				class="dark:text-black"
-			/>
-		</div>
+			<div class="items-input">
+				<label for="tags">Tags {{ 'form.input.label.tags' | translate }}</label>
+				<input
+					id="tags"
+					type="text"
+					formControlName="tags"
+					class="dark:text-black"
+				/>
+			</div>
+			<ng-container *ngIf="isTeacher">
+				<div class="items-input">
+					<label for="section">Section *</label>
+					<select
+						id="section"
+						formControlName="section_id"
+						(change)="onSelectSection($event.target)"
+					>
+						<option value="">
+							-- {{ 'form.input.label.section' | translate }} --
+						</option>
+						<option *ngFor="let section of sections" [value]="section.id">
+							{{ section.name }}
+						</option>
+					</select>
+				</div>
+				<div class="items-input">
+					<label for="block">Block *</label>
+					<select formControlName="block_id">
+						<option value="">
+							-- {{ 'form.input.label.block' | translate }} --
+						</option>
+						<option *ngFor="let block of blocks" [value]="block.id">
+							{{ block.name }}
+						</option>
+					</select>
+				</div>
+			</ng-container>
 
-		<div class="items-chekbox flex items-center">
-			<input
-				id="isPublished"
-				type="checkbox"
-				formControlName="isPublished"
-				class="h-4 w-4 rounded text-purple-400 focus:ring-purple-400 dark:text-purple-400"
-			/>
-			<label for="isPublished" class="ml-2">Published</label>
-		</div>
-	</form>
-	<chart-line></chart-line>
+			<div class="items-chekbox flex items-center">
+				<input
+					id="isPublic"
+					type="checkbox"
+					formControlName="isPublic"
+					class="h-4 w-4 rounded text-purple-400 focus:ring-purple-400 dark:text-purple-400"
+				/>
+				<label for="isPublic" class="ml-2">{{
+					'form.input.label.public' | translate
+				}}</label>
+			</div>
+		</form>
+		<chart-bar
+			*ngIf="stats"
+			[title]="'my-quiz.modify.chart-title' | translate"
+			[totalCount]="statsCount"
+			[values]="stats"
+		></chart-bar>
+
+		<form *ngIf="quiz" [formGroup]="quizModifyForm" class="sm:col-span-2">
+			<div formArrayName="questions" class="grid gap-10 sm:grid-cols-2">
+				<div *ngFor="let question of questions.controls; let i = index">
+					<p>Question n°{{ i + 1 }}</p>
+					<img [src]="quiz.questions[i].image" />
+					<div class="items-input" [formGroupName]="i">
+						<label [for]="'title[' + i + ']'">{{
+							'form.input.label.title' | translate
+						}}</label>
+						<input
+							[id]="'title[' + i + ']'"
+							type="text"
+							class="dark:text-black"
+							formControlName="title"
+						/>
+					</div>
+					<div class="grid gap-2 pt-2 sm:grid-cols-2">
+						<div
+							class="text-center"
+							*ngFor="let answer of quiz.questions[i].choices"
+						>
+							<div
+								class="rounded-lg p-1"
+								[class.bg-green-400]="
+									answer === quiz.questions[i].correctAnswer
+								"
+								[class.bg-red-400]="answer !== quiz.questions[i].correctAnswer"
+							>
+								{{ answer }}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="mt-10 flex justify-end gap-2">
+		<button
+			*ngIf="quizModifyForm.dirty"
+			(click)="modifyQuiz(quiz.id)"
+			type="submit"
+			class="bg-green-600 disabled:bg-green-400"
+			[disabled]="quizModifyForm.invalid"
+		>
+			{{ 'form.button.save' | translate }}
+		</button>
+
+		<button
+			*ngIf="quizModifyForm.dirty"
+			(click)="quizModifyForm.reset(initialFormValue)"
+			type="button"
+			class="bg-orange-600 disabled:bg-orange-400"
+			[disabled]="quizModifyForm.invalid"
+		>
+			{{ 'form.button.cancel' | translate }}
+		</button>
+
+		<button
+			type="button"
+			class="bg-red-600 disabled:bg-green-400"
+			(click)="deleteQuiz(quiz.id)"
+			[disabled]="quizModifyForm.invalid"
+		>
+			{{ 'form.button.delete' | translate }}
+		</button>
+	</div>
 </div>

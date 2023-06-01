@@ -13,9 +13,15 @@ import { DahsboardComponent } from './components/dashboard.component';
 import { DashboardRouting } from './dashboard-routing.module';
 import { ColumnHeader } from './pipes/column-header.pipe';
 import { NumberCountFormat } from './pipes/number-count-format.pipe';
+import { DashboardSectionBlockComponent } from './components/dashboard-section-block/dashboard-section-block.component';
+import { DashboardEditCampus } from './components/dashboard-campus/edit/dashboard-edit-campus.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DashboardEditSection } from './components/dashboard-section/edit/dashboard-edit-section.component';
+import { DashboardEditBlock } from './components/dashboard-block/edit/dashboard-edit-block.component';
+import { DashboardEditSectionBlock } from './components/dashboard-section-block/edit/dashboard-edit-section-block.component';
 
 @NgModule({
-	imports: [CommonModule, SharedModule, DashboardRouting],
+	imports: [ReactiveFormsModule, CommonModule, SharedModule, DashboardRouting],
 	declarations: [
 		DahsboardComponent,
 		DashboardDefaultViewComponent,
@@ -23,8 +29,13 @@ import { NumberCountFormat } from './pipes/number-count-format.pipe';
 		DashboardUserComponent,
 		DashboardQuizComponent,
 		DashboardCampusComponent,
+		DashboardEditCampus,
 		DashboardSectionComponent,
+		DashboardEditSection,
 		DashboardBlockComponent,
+		DashboardEditBlock,
+		DashboardSectionBlockComponent,
+		DashboardEditSectionBlock,
 		DashboardItemStats,
 		ColumnHeader,
 		NumberCountFormat,

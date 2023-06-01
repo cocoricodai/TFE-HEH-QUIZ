@@ -1,0 +1,8 @@
+:root {
+	--primary: #9333ea;
+	--base-unit: 8px;
+}
+
+.sd-root-modern {
+	@apply bg-gray-100 dark:bg-slate-800;
+}

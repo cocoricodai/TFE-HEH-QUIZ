@@ -13,21 +13,19 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.STRING,
 				unique: {
 					name: 'UniqueEmail',
-					msg: 'This e-mail already exists',
+					msg: 'models.user.email.unique',
 				},
 				allowNull: false,
 				validate: {
 					notNull: {
-						msg: 'Please enter a email',
+						msg: 'models.user.email.notNull',
 					},
 					validateMail: function (value) {
 						if (
 							!/^[a-zA-Z]+.[a-zA-Z]+@std.heh.be$/i.test(value) &&
 							!/^[a-zA-Z]+.[a-zA-Z]+@heh.be$/i.test(value)
 						) {
-							throw new Error(
-								'The e-mail must be from the HEH : firstname.lastname@std.heh.be or firstname.lastname@heh.be'
-							);
+							throw new Error('models.user.email.validate');
 						}
 					},
 				},
@@ -37,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 				validate: {
 					notNull: {
-						msg: 'Please enter a password',
+						msg: 'models.user.password.notNull',
 					},
 					validatePassword: function (value) {
 						if (
@@ -45,9 +43,7 @@ module.exports = (sequelize, DataTypes) => {
 								value
 							)
 						) {
-							throw new Error(
-								'Your password must be between 7 and 15 characters long and include at least one uppercase letter, one digit, and one special character from the following list: !@#%.'
-							);
+							throw new Error('models.user.password.validate');
 						}
 					},
 				},

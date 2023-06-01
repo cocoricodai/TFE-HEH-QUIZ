@@ -1,5 +1,8 @@
+<router-outlet></router-outlet>
+
 <table-list
 	[columnsConfig]="campus[0] | columnHeader"
 	[rows]="campus"
+	(delete)="deleteCampus($event)"
 	title="Campus"
 ></table-list>

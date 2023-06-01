@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
 				validate: {
 					isLengthValid(value) {
 						if (value.split(',').length < 2 || value.split(',').length > 4) {
-							throw new Error('Min 2 and max 4 answers');
+							throw new Error('question.choices.min-max');
 						}
 					},
 				},
@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
 				validate: {
 					isPointsValid(value) {
 						if (value < 1 || value > 10) {
-							throw new Error('Valeure comprise entre 1 et 10');
+							throw new Error('models.question.points.min-max');
 						}
 					},
 				},

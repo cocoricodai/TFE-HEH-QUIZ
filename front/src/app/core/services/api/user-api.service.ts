@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { TypedJSON } from 'typedjson';
 import { ApiConstants } from '../../constants/api.constant.enums';
 import { ResponseApi, User, UserCount } from '../../models/response-api.model';
-import { UserProfileModel } from '../../models/user.model';
+import { UserModel, UserProfileModel } from '../../models/user.model';
 import { ApiUrlUtils } from '../../utils/api-url.utils';
 
 @Injectable({
@@ -22,7 +22,6 @@ export class UserApiService {
 	constructor(private _http: HttpClient) {}
 
 	public getAllUsers(params?: HttpParams): Observable<User[]> {
-		console.log(params);
 		return this._http
 			.get(this.userUrl, {
 				params,
@@ -43,7 +42,7 @@ export class UserApiService {
 		);
 	}
 
-	public getUserByPk(uuid: string): Observable<User> {
+	public getUserByPk(uuid: string): Observable<UserModel> {
 		return this._http.get(this.userUrl + `/${uuid}`).pipe(
 			map((res) => {
 				return TypedJSON.parse(res, ResponseApi)?.data;

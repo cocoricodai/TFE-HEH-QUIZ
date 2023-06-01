@@ -2,7 +2,7 @@ import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import { DifficultyType } from './difficulty.type';
 import { Question } from './question.model';
 import { UserProfileModel } from './user.model';
-import { LikeModel } from './like.model';
+import { Like } from './like.model';
 
 @jsonObject
 export class Quiz {
@@ -22,7 +22,13 @@ export class Quiz {
 	public tags?: string[] | null;
 
 	@jsonMember(Boolean)
-	public isPublished!: boolean;
+	public isPublic!: boolean;
+
+	@jsonMember(Boolean)
+	public isActive!: boolean;
+
+	@jsonMember(Number)
+	public total!: number;
 
 	@jsonMember(String, { name: 'user_id' })
 	public userId!: string;
@@ -42,8 +48,8 @@ export class Quiz {
 	@jsonMember(UserProfileModel, { name: 'user_profile' })
 	public profile?: UserProfileModel;
 
-	@jsonMember(LikeModel)
-	public likes!: LikeModel;
+	@jsonMember(Like)
+	public likes!: Like;
 
 	constructor(fields: {
 		id: number;
@@ -53,12 +59,14 @@ export class Quiz {
 		userId: string;
 		sectionId: number;
 		blockId: number;
-		isPublished: boolean;
+		isPublic: boolean;
+		isActive: boolean;
+		total: number;
 		createdAt: Date;
 		tags?: string[] | null;
 		questions: Question[];
 		profile?: UserProfileModel;
-		likes: LikeModel;
+		likes: Like;
 	}) {
 		Object.assign(this, fields);
 	}

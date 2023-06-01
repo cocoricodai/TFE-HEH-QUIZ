@@ -19,7 +19,7 @@ const sequelize = new Sequelize(
 		host: envConfig.DB_HOST,
 		dialect: 'mariadb',
 		dialectOptions: {
-			timeZone: 'Etc/GMT-2',
+			timeZone: 'Europe/Paris',
 		},
 		logging: false,
 	}
@@ -35,41 +35,41 @@ const Like = models.LikeModel(sequelize, DataTypes);
 const Role = models.RoleModel(sequelize, DataTypes);
 const Block = models.BlockModel(sequelize, DataTypes);
 const SectionBlock = models.SectionBlockModel(sequelize, DataTypes);
-const UserQuizAnswer = models.UserQuizAnswerModel(sequelize, DataTypes);
+const Report = models.ReportModel(sequelize, DataTypes);
+const Result = models.ResultModel(sequelize, DataTypes);
+const Response = models.ResponseModel(sequelize, DataTypes);
 
 // Association User and UserProfile
 User.hasOne(UserProfile, { foreignKey: 'user_id', as: 'profile' });
 UserProfile.belongsTo(User, { foreignKey: 'user_id', as: 'profile' });
 
 // Association UserProfile and Role
-Role.hasOne(UserProfile, { foreignKey: 'role_id', as: 'role' });
+Role.hasMany(UserProfile, { foreignKey: 'role_id', as: 'role' });
 UserProfile.belongsTo(Role, { foreignKey: 'role_id', as: 'role' });
 
 // Association UserProfile and Campus
-Campus.hasOne(UserProfile, { foreignKey: 'campus_id', as: 'campus' });
+Campus.hasMany(UserProfile, { foreignKey: 'campus_id', as: 'campus' });
 UserProfile.belongsTo(Campus, { foreignKey: 'campus_id', as: 'campus' });
 
 // Association UserProfile and Section
-Section.hasOne(UserProfile, { foreignKey: 'section_id', as: 'section' });
+Section.hasMany(UserProfile, { foreignKey: 'section_id', as: 'section' });
 UserProfile.belongsTo(Section, { foreignKey: 'section_id', as: 'section' });
 
 // Association UserProfile and Block
-Block.hasOne(UserProfile, { foreignKey: 'block_id', as: 'block' });
+Block.hasMany(UserProfile, { foreignKey: 'block_id', as: 'block' });
 UserProfile.belongsTo(Block, { foreignKey: 'block_id', as: 'block' });
 
 // Association Campus and Section
 Campus.hasMany(Section, { foreignKey: 'campus_id' });
-Section.belongsTo(Campus, { foreignKey: 'campus_id' });
+Section.belongsTo(Campus, { foreignKey: 'campus_id', as: 'campus' });
 
-// Association Section and Block
-Block.belongsToMany(Section, {
-	through: SectionBlock,
-	foreignKey: 'block_id',
-});
-Section.belongsToMany(Block, {
-	through: SectionBlock,
-	foreignKey: 'section_id',
-});
+// Association Block and SectionBlock
+Block.hasMany(SectionBlock, { foreignKey: 'block_id' });
+SectionBlock.belongsTo(Block, { foreignKey: 'block_id' });
+
+// Association Section and SectionBlock
+Section.hasMany(SectionBlock, { foreignKey: 'section_id' });
+SectionBlock.belongsTo(Section, { foreignKey: 'section_id' });
 
 // Association UserProfile and Quiz
 UserProfile.hasMany(Quiz, { foreignKey: 'user_id', as: 'user_profile' });
@@ -91,18 +91,6 @@ Quiz.belongsTo(Block, { foreignKey: 'block_id' });
 Quiz.hasMany(Question, { foreignKey: 'quiz_id', as: 'questions' });
 Question.belongsTo(Quiz, { foreignKey: 'quiz_id', as: 'questions' });
 
-// Association UserQuizAnswers and Quiz
-Quiz.hasMany(UserQuizAnswer, { foreignKey: 'quiz_id' });
-UserQuizAnswer.belongsTo(Quiz, { foreignKey: 'quiz_id' });
-
-// Association UserQuizAnswers and User
-User.hasMany(UserQuizAnswer, { foreignKey: 'user_id' });
-UserQuizAnswer.belongsTo(User, { foreignKey: 'user_id' });
-
-// Association UserQuizAnswers and Question
-Question.hasMany(UserQuizAnswer, { foreignKey: 'question_id' });
-UserQuizAnswer.belongsTo(Question, { foreignKey: 'question_id' });
-
 // Association Like and User
 User.hasMany(Like, { foreignKey: 'user_id' });
 Like.belongsTo(User, { foreignKey: 'user_id' });
@@ -110,6 +98,30 @@ Like.belongsTo(User, { foreignKey: 'user_id' });
 // Association Like and Quiz
 Quiz.hasMany(Like, { foreignKey: 'quiz_id', as: 'likes' });
 Like.belongsTo(Quiz, { foreignKey: 'quiz_id', as: 'likes' });
+
+// Association Report and User
+User.hasMany(Report, { foreignKey: 'user_id' });
+Report.belongsTo(User, { foreignKey: 'user_id' });
+
+// Association Report and Quiz
+Quiz.hasMany(Report, { foreignKey: 'quiz_id', as: 'reports' });
+Report.belongsTo(Quiz, { foreignKey: 'quiz_id', as: 'reports' });
+
+// Association  Resultat and User
+User.hasMany(Result, { foreignKey: 'user_id' });
+Result.belongsTo(User, { foreignKey: 'user_id' });
+
+// Association  Resultat and Quiz
+Quiz.hasMany(Result, { foreignKey: 'quiz_id' });
+Result.belongsTo(Quiz, { foreignKey: 'quiz_id', as: 'quiz' });
+
+// Association Response and Result
+Result.hasMany(Response, { foreignKey: 'result_id', as: 'responses' });
+Response.belongsTo(Result, { foreignKey: 'result_id', as: 'responses' });
+
+// Association Response and Question
+Question.hasMany(Response, { foreignKey: 'question_id' });
+Response.belongsTo(Question, { foreignKey: 'question_id' });
 
 async function dbConnect() {
 	try {
@@ -119,14 +131,28 @@ async function dbConnect() {
 		await sequelize.sync({ alter: false });
 		logger.info('Successfully synced the models with the database!');
 
-		// await Promise.all([
-		// 	Role.bulkCreate(roles),
-		// 	Campus.bulkCreate(campus),
-		// 	Section.bulkCreate(sections),
-		// 	Block.bulkCreate(blocks),
-		// 	SectionBlock.bulkCreate(sectionblocks),
-		// ]);
-		// logger.info('Successfully inserted initial data into the database!');
+		const roleCount = await Role.count();
+		const campusCount = await Campus.count();
+		const sectionCount = await Section.count();
+		const blockCount = await Block.count();
+		const sectionBlockCount = await SectionBlock.count();
+
+		if (
+			roleCount === 0 ||
+			campusCount === 0 ||
+			sectionCount === 0 ||
+			blockCount === 0 ||
+			sectionBlockCount === 0
+		) {
+			await Promise.all([
+				Role.bulkCreate(roles),
+				Campus.bulkCreate(campus),
+				Block.bulkCreate(blocks),
+			]);
+			await Section.bulkCreate(sections);
+			await SectionBlock.bulkCreate(sectionblocks);
+			logger.info('Successfully inserted initial data into the database!');
+		}
 	} catch (err) {
 		logger.error('Unable to connect to MariaDB', err);
 	}
@@ -145,5 +171,7 @@ module.exports = {
 	Role,
 	Block,
 	SectionBlock,
-	UserQuizAnswer,
+	Report,
+	Response,
+	Result,
 };

@@ -1,7 +1,8 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { forkJoin } from 'rxjs';
 import { ApiQueryConstant } from 'src/app/core/constants/api.query.constant';
 import { RoleConstants } from 'src/app/core/constants/roles.constants.enums';
 import { Quiz } from 'src/app/core/models/quiz.model';
@@ -10,6 +11,7 @@ import { QuizApiService } from 'src/app/core/services/api/quiz-api.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { TargetLoadingDirective } from 'src/app/shared/loading/directives/target-loading.directive';
 
+@UntilDestroy()
 @Component({
 	selector: 'feature-home',
 	templateUrl: './home.component.html',
@@ -48,23 +50,25 @@ export class HomeComponent implements OnInit {
 		this._latestQuizLoader.startLoading();
 		this._likedQuizLoader.startLoading();
 
-		this._quizApiService.getAllQuiz().subscribe({
-			next: (latestQuizs) => {
-				this._latestQuizLoader.stopLoading();
-				this.latestQuizs = latestQuizs;
-			},
-		});
-
 		const likedParams = new HttpParams().append(
 			ApiQueryConstant.Key.SORT_BY,
 			'likes'
 		);
-		this._quizApiService.getAllQuiz(likedParams).subscribe({
-			next: (likedQuizs) => {
-				this._likedQuizLoader.stopLoading();
-				this.likedQuizs = likedQuizs;
-			},
-		});
+
+		forkJoin(
+			this._quizApiService.getAllQuiz(),
+			this._quizApiService.getAllQuiz(likedParams)
+		)
+			.pipe(untilDestroyed(this))
+			.subscribe({
+				next: ([latestQuizs, likedQuizs]) => {
+					this._latestQuizLoader.stopLoading();
+					this.latestQuizs = latestQuizs;
+
+					this._likedQuizLoader.stopLoading();
+					this.likedQuizs = likedQuizs;
+				},
+			});
 	}
 
 	// Events

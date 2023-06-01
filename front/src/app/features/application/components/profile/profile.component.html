@@ -1,1 +1,67 @@
-<p></p>
+<ng-container *ngIf="user">
+	<div class="mx-auto max-w-7xl overflow-x-auto p-5">
+		<div>
+			<p class="text-xl font-semibold">
+				{{ user.profile.firstName }} {{ user.profile.lastName }}
+			</p>
+
+			<p>Type : {{ user.profile.role.name }}</p>
+			<p>Campus : {{ user.profile.campus.name }}</p>
+			<p *ngIf="user.profile?.section">
+				Section : {{ user.profile.section.name }}
+			</p>
+			<p *ngIf="user.profile?.block">Block : {{ user.profile.block.name }}</p>
+		</div>
+		<div>
+			<div class="my-5">
+				<h3
+					class="border-b-purple-500 text-xl text-purple-600 dark:text-purple-500"
+				>
+					Quiz
+				</h3>
+				<hr class="border-purple-500" />
+			</div>
+
+			<div
+				class="flex flex-row flex-wrap justify-center gap-5"
+				targetLoading
+				#latestQuiz="target-loading"
+			>
+				<div
+					class="w-full overflow-x-auto pb-5 sm:overflow-hidden sm:hover:overflow-x-auto"
+				>
+					<div class="whitespace-no-wrap scroll-snap-x-mandatory flex gap-5">
+						<div class="flex-none snap-start" *ngFor="let quiz of quizs">
+							<quiz-card [quiz]="quiz"></quiz-card>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="py-10">
+			<h3 class="text-xl text-purple-600 dark:text-purple-500">
+				{{ 'my-profile.navbar.quiz-history' | translate }}
+			</h3>
+			<hr class="mb-5 border-purple-500" />
+			<div>
+				<div
+					*ngFor="let result of results"
+					class="odd:bg-gray-200 odd:dark:bg-purple-600"
+				>
+					<div class="grid grid-cols-3 py-2 text-center">
+						<div>
+							<a
+								class="cursor-pointer hover:underline"
+								(click)="navigateOnQuiz(result.quiz_id)"
+								>{{ result.title }}</a
+							>
+						</div>
+						<div>{{ result.createdAt | date : 'dd MMMM yyyy, HH:mm' }}</div>
+						<div>{{ result.score }} / {{ result.total }}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-container>

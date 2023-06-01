@@ -12,27 +12,27 @@ import { VerifyComponent } from './components/verify/verify.component';
 			{
 				path: 'login',
 				component: LoginComponent,
-				title: 'Login',
+				title: 'routing.auth.login',
 			},
 			{
 				path: 'register',
 				component: RegisterComponent,
-				title: 'Register',
+				title: 'routing.auth.register',
 			},
 			{
 				path: 'forgot-password',
 				component: ForgotPasswordComponent,
-				title: 'Forgot password',
+				title: 'routing.auth.forgot-password',
 			},
 			{
 				path: 'reset-password/:token',
 				component: ResetPasswordComponent,
-				title: 'Reset password',
+				title: 'routing.auth.reset-password',
 			},
 			{
 				path: 'verify/:id/:token',
 				component: VerifyComponent,
-				title: 'Verify account',
+				title: 'routing.auth.verify-account',
 			},
 		]),
 	],

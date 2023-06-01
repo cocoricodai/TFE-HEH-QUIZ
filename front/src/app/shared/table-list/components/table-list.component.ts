@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { TableListColumnConfig } from '../models/table-list-column-config.model';
 
@@ -33,6 +33,9 @@ export class TableListComponent {
 	@Input()
 	public haveNewButton: boolean = true;
 
+	@Output()
+	public delete = new EventEmitter<number | string>();
+
 	//Lifecycle
 	constructor() {}
 
@@ -47,6 +50,14 @@ export class TableListComponent {
 				return 0;
 			}
 		});
+	}
+
+	public onDelete(id: string | number) {
+		const sure = window.confirm('Are you sure to delete this row ?');
+
+		if (sure) {
+			this.delete.emit(id);
+		}
 	}
 
 	public getType(variable: any): string {

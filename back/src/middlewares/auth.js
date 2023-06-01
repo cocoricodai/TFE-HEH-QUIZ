@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { UserProfile, Role } = require('../config/db.config');
+const { UserProfile, Role, User } = require('../config/db.config');
 
 const responseHelper = require('../helpers/response'); // Formatting the json response
 
@@ -12,12 +12,17 @@ exports.verifyToken = (req, res, next) => {
 		jwt.verify(
 			token,
 			envConfig.ACCESS_TOKEN_PRIVATE_KEY,
-			(err, decodedToken) => {
+			async (err, decodedToken) => {
 				if (err) {
 					return res
 						.status(401)
 						.json({ success: false, message: 'Invalid token' });
 				}
+				const user = await User.findByPk(decodedToken.id);
+
+				if (!user.isActive)
+					return responseHelper.unauthorized(res, 'User inactive !');
+
 				req.userID = decodedToken.id;
 				next();
 			}
@@ -27,7 +32,7 @@ exports.verifyToken = (req, res, next) => {
 	}
 };
 
-exports.isAdmin = async function (req, res, next) {
+exports.isAdmin = async (req, res, next) => {
 	const token = extractToken(req, res);
 
 	try {

@@ -6,6 +6,7 @@ import {
 	Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
 import { Block, Campus, Section } from 'src/app/core/models/response-api.model';
@@ -14,6 +15,8 @@ import { BlockApiService } from 'src/app/core/services/api/block-api.service';
 import { CampusApiService } from 'src/app/core/services/api/campus-api.service';
 import { SectionApiService } from 'src/app/core/services/api/section-api.service';
 import { LoadingService } from 'src/app/shared/loading/services/loading.service';
+
+@UntilDestroy()
 @Component({
 	selector: 'register-form',
 	templateUrl: './register-form.component.html',
@@ -41,11 +44,14 @@ export class RegisterFormComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-		this._campusApiService.getAllCampus().subscribe({
-			next: (campus) => {
-				this.campusList = campus;
-			},
-		});
+		this._campusApiService
+			.getAllCampus()
+			.pipe(untilDestroyed(this))
+			.subscribe({
+				next: (campus) => {
+					this.campusList = campus;
+				},
+			});
 
 		this.setupForm();
 	}
@@ -104,20 +110,26 @@ export class RegisterFormComponent implements OnInit {
 	// Events
 	public onSelectCampus(event: any): void {
 		const campus_id: number = event.value;
-		this._sectionApiService.getSectionsByCampus(campus_id).subscribe({
-			next: (sections) => {
-				this.sections = sections;
-			},
-		});
+		this._sectionApiService
+			.getSectionsByCampus(campus_id)
+			.pipe(untilDestroyed(this))
+			.subscribe({
+				next: (sections) => {
+					this.sections = sections;
+				},
+			});
 	}
 
 	public onSelectSection(event: any): void {
 		const section_id: number = event.value;
-		this._blockApiService.getBlocksBySection(section_id).subscribe({
-			next: (blocks) => {
-				this.blocks = blocks;
-			},
-		});
+		this._blockApiService
+			.getBlocksBySection(section_id)
+			.pipe(untilDestroyed(this))
+			.subscribe({
+				next: (blocks) => {
+					this.blocks = blocks;
+				},
+			});
 	}
 
 	public register(): void {
@@ -125,7 +137,10 @@ export class RegisterFormComponent implements OnInit {
 		const payload = this.registerForm.value;
 		this._authenticationApiService
 			.register(payload)
-			.pipe(finalize(() => this._loadingService.stopLoading()))
+			.pipe(
+				untilDestroyed(this),
+				finalize(() => this._loadingService.stopLoading())
+			)
 			.subscribe({
 				next: (res) => {
 					this._toastr.success(res?.message);

@@ -8,6 +8,7 @@ const campusRoute = require('./campus.route');
 const sectionRoute = require('./section.route');
 const blockRoute = require('./block.route');
 const quizRoute = require('./quiz.route');
+const sectionBlockRoute = require('./section-block.route');
 
 // Middlewares
 const auth = require('../../middlewares/auth');
@@ -24,6 +25,7 @@ router.use('/auth', authRoute); // ENDPOINT for authentification
 router.use('/campus', campusRoute); // ENDPOINT for campus
 router.use('/section', sectionRoute); // ENDPOINT for section
 router.use('/block', blockRoute); // ENDPOINT for block
+router.use('/section-block', sectionBlockRoute); // ENDPOINT for block
 
 // Need to be Signin to access
 router.use('/quiz', auth.verifyToken, quizRoute); // ENDPOINT for quiz

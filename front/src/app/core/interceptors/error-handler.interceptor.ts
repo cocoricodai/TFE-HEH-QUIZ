@@ -9,11 +9,15 @@ import {
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, catchError, switchMap, throwError, timer } from 'rxjs';
+import { TranslateManagerService } from '../services/translate/translate-manager.service';
 
 @Injectable({ providedIn: 'root' })
 export class ErrorHandlerInterceptor implements HttpInterceptor {
 	// Lifecycle
-	constructor(private _toastr: ToastrService) {}
+	constructor(
+		private _toastr: ToastrService,
+		private _translateManagerService: TranslateManagerService
+	) {}
 
 	intercept(
 		req: HttpRequest<any>,
@@ -22,11 +26,21 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 		return next.handle(req).pipe(
 			catchError((err: HttpErrorResponse) => {
 				if (err.status === HttpStatusCode.InternalServerError) {
-					this._toastr.error('Serveur down');
+					this._toastr.error(
+						this._translateManagerService.getTranslation(
+							'status.internalServerError'
+						)
+					);
 				} else if (err.status === HttpStatusCode.Forbidden) {
-					this._toastr.error('Vous ne pouvez pas y avoir accès');
+					this._toastr.error(
+						this._translateManagerService.getTranslation('status.forbidden')
+					);
 				} else if (err.status === HttpStatusCode.TooManyRequests) {
-					this._toastr.warning('Trop de requetes, veuillez allez moins vite');
+					this._toastr.warning(
+						this._translateManagerService.getTranslation(
+							'status.tooManyRequests'
+						)
+					);
 					return timer(5000).pipe(switchMap(() => this.intercept(req, next)));
 				}
 				return throwError(() => err);

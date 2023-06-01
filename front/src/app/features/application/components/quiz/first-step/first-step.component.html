@@ -26,7 +26,7 @@
 				></path>
 			</g>
 		</svg>
-		<button class="self-center">Back</button>
+		<button class="self-center">{{ 'form.button.back' | translate }}</button>
 	</div>
 
 	<div *ngIf="quiz">
@@ -94,34 +94,10 @@
 			<a
 				class="mx-auto inline-block cursor-pointer rounded-lg bg-purple-500 py-1 px-20 text-white dark:bg-purple-700"
 				(click)="onStartQuiz()"
-				>Start</a
+				>{{ 'form.button.start' | translate }}</a
 			>
+
+			<p class="pt-10"><button (click)="onReportQuiz()">Report</button></p>
 		</div>
 	</div>
 </div>
-
-<!-- <ng-container *ngIf="quiz">
-	
-
-		<div class="flex items-center justify-between text-xs text-gray-600">
-			<div class="h-2.5 w-[300px] rounded-full bg-gray-200 dark:bg-gray-300">
-				<div
-					*ngIf="quiz.difficulty == 'easy'"
-					class="h-2.5 rounded-full bg-green-600"
-					style="width: 33%"
-				></div>
-				<div
-					*ngIf="quiz.difficulty == 'medium'"
-					class="h-2.5 rounded-full bg-orange-600"
-					style="width: 67%"
-				></div>
-				<div
-					*ngIf="quiz.difficulty == 'hard'"
-					class="h-2.5 rounded-full bg-red-600"
-					style="width: 100%"
-				></div>
-			</div>
-	</div>
-
-		
-</ng-container>-->

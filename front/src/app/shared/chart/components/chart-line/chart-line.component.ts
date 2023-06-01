@@ -28,27 +28,13 @@ export class ChartLineComponent {
 	}
 
 	ngAfterViewInit(): void {
-		const dates = [
-			new Date('2023-04-7'),
-			new Date('2023-04-8'),
-			new Date('2023-04-9'),
-			new Date('2023-04-10'),
-			new Date('2023-04-11'),
-			new Date('2023-04-12'),
-			new Date('2023-04-13'),
-		];
-
 		const config: ChartConfiguration = {
 			type: 'line',
 			data: {
-				labels: dates.map((date) => {
-					const day = date.getDate();
-					const month = date.getMonth() + 1; // ajouter 1 car les mois commencent à 0
-					return `${day}/${month}`;
-				}),
+				labels: this.values.labels,
 				datasets: [
 					{
-						data: [300, 114, 106, 306, 107, 111, 433],
+						data: this.values.datas,
 					},
 				],
 			},

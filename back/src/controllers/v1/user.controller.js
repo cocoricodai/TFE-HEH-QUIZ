@@ -54,7 +54,6 @@ exports.getAllUsers = async (req, res) => {
 
 		return responseHelper.successWithData(res, 'All users', user);
 	} catch (err) {
-		console.log(err);
 		responseHelper.errorServer(req, res);
 	}
 };

@@ -1,14 +1,35 @@
 {
+	"status": {
+		"internalServerError": "Server down",
+		"forbidden": "You can't access it",
+		"tooManyRequests": "Too many requests, please go slower",
+		"error": "Something Wrong"
+	},
 	"auth": {
 		"forgot-password": {
 			"description": "Don't worry. Reseting your password is easy. Just type your e-mail.",
 			"label": "Forgot password",
-			"remember": "Did you remember your password ?"
+			"remember": "Did you remember your password ?",
+			"send": "Send"
 		},
 		"login": { "register-label": "Don't have account yet ?" },
 		"register": {
 			"label": "Register",
-			"login-label": "Already have an account ?"
+			"login-label": "Already have an account ?",
+			"error": {
+				"mail": "The e-mail must be from the HEH.",
+				"password": "Your password must be between 7 and 15 characters long and include at elast one uppercase letter, one digit, and one special character from the following list: !@#%.",
+				"password-confirmation": "Password must match"
+			}
+		},
+		"reset-password": {
+			"title": "Reset Password",
+			"remember": "Remember your account ?",
+			"button": "Reset"
+		},
+		"verify-account": {
+			"success": "Your account has been successfully activated!",
+			"error": "There was a mistake"
 		}
 	},
 	"form": {
@@ -24,18 +45,85 @@
 				"section": "Select a section",
 				"title": "Title",
 				"difficulty": "Difficulty",
-				"published": "Published",
+				"tags": "(separate with a comma)",
+				"public": "Public",
 				"suspend": "Yes, suspend my account",
 				"hard": "Hard",
 				"medium": "Medium",
-				"easy": "Easy"
+				"easy": "Easy",
+				"next": "Next"
 			}
+		},
+		"button": {
+			"delete": "Delete",
+			"cancel": "Cancel",
+			"save": "Save",
+			"start": "Start",
+			"back": "Back"
 		}
+	},
+	"navbar": {
+		"home": "Home",
+		"my-quiz": "My Quiz"
+	},
+	"my-quiz": {
+		"public": "Publics",
+		"private": "Privates",
+		"modify": {
+			"chart-title": "Percentage of success in relation to the questions",
+			"confirm": "Are you sure to delete this quiz ?"
+		}
+	},
+	"new-quiz": {
+		"title": "New Quiz"
+	},
+	"home": {
+		"latest": "Latest",
+		"most-liked": "Most Liked"
 	},
 	"my-profile": {
 		"navbar": {
 			"personnal": "Personnal Information",
 			"quiz-history": "Quiz History"
+		},
+		"personnal-password": {
+			"password": "Password",
+			"description": "Update your password associated with your account."
+		},
+		"personnal-langage": {
+			"langage": "Language",
+			"description": "You can change the default language"
+		},
+		"personnal-suspend": {
+			"suspend": "Suspend account",
+			"description": "No longer want to use our service? You can suspend your account here.",
+			"confirm": "Are you sure to suspend your account ?"
+		}
+	},
+	"routing": {
+		"auth": {
+			"login": "Login",
+			"register": "Sign up",
+			"forgot-password": "Forgot password",
+			"reset-password": "Reset password",
+			"verify-account": "Verify account"
+		},
+		"application": {
+			"my-quiz": "My quiz",
+			"my-profile": "My profile",
+			"new-quiz": "New quiz",
+			"home": "Home",
+			"profile": "Profile"
+		}
+	},
+	"chart": {
+		"true": "True",
+		"false": "False"
+	},
+	"quiz": {
+		"results": {
+			"your-answer": "Your answer",
+			"correct-answer": "Correct answer"
 		}
 	}
 }

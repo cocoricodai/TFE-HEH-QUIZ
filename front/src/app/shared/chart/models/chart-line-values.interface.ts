@@ -1,4 +1,4 @@
 export interface ChartLineValues {
-	labels: Array<Date>;
+	labels: Array<string | Date>;
 	datas: Array<number>;
 }

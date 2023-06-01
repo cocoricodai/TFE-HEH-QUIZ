@@ -1,5 +1,7 @@
+<router-outlet></router-outlet>
 <table-list
 	[columnsConfig]="blocks[0] | columnHeader"
 	[rows]="blocks"
+	(delete)="deleteBlock($event)"
 	title="Blocks"
 ></table-list>

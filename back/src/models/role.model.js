@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.STRING,
 				unique: {
 					name: 'UniqueName',
-					message: 'This role already exists',
+					message: 'models.role.unique',
 				},
 				allowNull: false,
 			},

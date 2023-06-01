@@ -12,9 +12,10 @@ const {
 
 const responseHelper = require('../../helpers/response'); // Formatting the JSON response
 const errorHandler = require('../../helpers/errorHandler'); // Formating the Error JSON response
-const logger = require('../../helpers/logger/logger'); // Logger
 const envConfig = require('../../config/env.config'); // Environment Config
 const cryptoHelper = require('../../helpers/crypto');
+const { getTranslate } = require('../../helpers/translate');
+const mailHelper = require('../../helpers/mailSender');
 
 // Register
 exports.signup = async (req, res) => {
@@ -91,14 +92,11 @@ exports.signup = async (req, res) => {
 			// Sending email
 			const subject = 'Confirm ur email';
 			const text = `With this link : ${envConfig.WEBSITE_URL}/auth/verify/${user.id}/${cryptoToken}`;
-			logger.info(
-				`Email : ${user.email} , subject : ${subject}, text : ${text}`
-			);
-			//mailHelper.sendMail(email, subject, text);
+			mailHelper.sendMail(email, subject, text);
 
 			responseHelper.created(
 				res,
-				'Your account has been successfully created! Please check your email to confirm your inscription'
+				getTranslate(req, 'controller.auth.register.account-created')
 			);
 		});
 	} catch (err) {
@@ -113,11 +111,20 @@ exports.verifyAccount = (req, res) => {
 	User.findOne({ where: { id } })
 		.then((user) => {
 			if (user === null)
-				return responseHelper.badRequest(res, "This user doesn't exist");
+				return responseHelper.badRequest(
+					res,
+					getTranslate(req, 'controller.auth.verify-account.notUser')
+				);
 			if (user.token !== token)
-				return responseHelper.badRequest(res, 'Invalid token');
+				return responseHelper.badRequest(
+					res,
+					getTranslate(req, 'controller.auth.verify-account.invalidToken')
+				);
 			if (user.isActive)
-				return responseHelper.badRequest(res, 'User already verified');
+				return responseHelper.badRequest(
+					res,
+					getTranslate(req, 'controller.auth.verify-account.alreadyVerify')
+				);
 
 			const cryptoToken = cryptoHelper.getCrypto();
 
@@ -130,7 +137,10 @@ exports.verifyAccount = (req, res) => {
 				}
 			)
 				.then(() => {
-					responseHelper.success(res, 'Your account has been verified');
+					responseHelper.success(
+						res,
+						getTranslate(req, 'controller.auth.verify-account.success')
+					);
 				})
 				.catch(() => {
 					responseHelper.errorServer(req, res);
@@ -158,14 +168,23 @@ exports.signin = (req, res) => {
 	})
 		.then((user) => {
 			if (user === null)
-				return responseHelper.badRequest(res, "This user doesn't exist");
+				return responseHelper.badRequest(
+					res,
+					getTranslate(req, 'controller.auth.login.notUser')
+				);
 			if (!user.isActive)
-				return responseHelper.badRequest(res, 'Active your account by mail');
+				return responseHelper.badRequest(
+					res,
+					getTranslate(req, 'controller.auth.login.activeAccount')
+				);
 			bcrypt
 				.compare(password, user.password)
 				.then((isCorrect) => {
 					if (!isCorrect)
-						return responseHelper.badRequest(res, 'Invalid password');
+						return responseHelper.badRequest(
+							res,
+							getTranslate(req, 'controller.auth.login.wrongPassword')
+						);
 
 					const token = jwt.sign(
 						{ email: user.email, id: user.id, role: user.profile.role.name },
@@ -188,7 +207,11 @@ exports.signin = (req, res) => {
 						maxAge: 30 * 24 * 60 * 60 * 1000,
 					});
 
-					responseHelper.successWithData(res, 'Sign in success', data);
+					responseHelper.successWithData(
+						res,
+						getTranslate(req, 'controller.auth.login.success'),
+						data
+					);
 				})
 				.catch(() => {
 					responseHelper.errorServer(req, res);
@@ -206,15 +229,21 @@ exports.forgotPassword = async (req, res) => {
 	try {
 		const user = await User.findOne({ where: { email } });
 
-		if (!user) return responseHelper.badRequest(res, "This user doesn't exist");
+		if (!user)
+			return responseHelper.badRequest(
+				res,
+				getTranslate(req, 'controller.auth.forgot-password.notUser')
+			);
 
 		// Sending email
 		const subject = 'Password reset request';
 		const text = `With this link : ${envConfig.WEBSITE_URL}/auth/reset-password/${user.token}`;
-		logger.info(`Email : ${user.email} , subject : ${subject}, text : ${text}`);
-		//mailHelper.sendMail(email, subject, text);
+		mailHelper.sendMail(email, subject, text);
 
-		responseHelper.success(res, 'Mail send! Check your email');
+		responseHelper.success(
+			res,
+			getTranslate(req, 'controller.auth.forgot-password.success')
+		);
 	} catch (err) {
 		responseHelper.errorServer(req, res);
 	}
@@ -227,7 +256,11 @@ exports.resetPassword = async (req, res) => {
 	try {
 		const user = await User.findOne({ where: { token } });
 
-		if (!user) return responseHelper.badRequest(res, "This user doesn't exist");
+		if (!user)
+			return responseHelper.badRequest(
+				res,
+				getTranslate(req, 'controller.auth.reset-password.notUser')
+			);
 
 		const cryptoToken = cryptoHelper.getCrypto();
 		User.update(
@@ -239,7 +272,10 @@ exports.resetPassword = async (req, res) => {
 				individualHooks: true,
 			}
 		).then(() => {
-			responseHelper.success(res, 'Password updated success');
+			responseHelper.success(
+				res,
+				getTranslate(req, 'controller.auth.forgot-password.success')
+			);
 		});
 	} catch (err) {
 		return errorHandler.error(req, res, err);
@@ -272,9 +308,13 @@ exports.refreshToken = async (req, res) => {
 				maxAge: 30 * 24 * 60 * 60 * 1000,
 			});
 
-			responseHelper.successWithData(res, 'Refresh update', {
-				token: newToken,
-			});
+			responseHelper.successWithData(
+				res,
+				getTranslate(req, 'controller.auth.refresh-password.success'),
+				{
+					token: newToken,
+				}
+			);
 		}
 	);
 };

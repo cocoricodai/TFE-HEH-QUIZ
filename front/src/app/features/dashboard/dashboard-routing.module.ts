@@ -7,6 +7,11 @@ import { DashboardQuizComponent } from './components/dashboard-quiz/dashboard-qu
 import { DashboardSectionComponent } from './components/dashboard-section/dashboard-section.component';
 import { DashboardUserComponent } from './components/dashboard-user/dashboard-user.component';
 import { DahsboardComponent } from './components/dashboard.component';
+import { DashboardSectionBlockComponent } from './components/dashboard-section-block/dashboard-section-block.component';
+import { DashboardEditCampus } from './components/dashboard-campus/edit/dashboard-edit-campus.component';
+import { DashboardEditSection } from './components/dashboard-section/edit/dashboard-edit-section.component';
+import { DashboardEditBlock } from './components/dashboard-block/edit/dashboard-edit-block.component';
+import { DashboardEditSectionBlock } from './components/dashboard-section-block/edit/dashboard-edit-section-block.component';
 
 @NgModule({
 	imports: [
@@ -14,6 +19,7 @@ import { DahsboardComponent } from './components/dashboard.component';
 			{
 				path: 'dashboard',
 				component: DahsboardComponent,
+				title: 'Dashboard',
 				children: [
 					{
 						path: '',
@@ -30,22 +36,42 @@ import { DahsboardComponent } from './components/dashboard.component';
 					{
 						path: 'campus',
 						component: DashboardCampusComponent,
+						children: [
+							{
+								path: ':id',
+								component: DashboardEditCampus,
+							},
+						],
 					},
 					{
 						path: 'section',
 						component: DashboardSectionComponent,
+						children: [
+							{
+								path: ':id',
+								component: DashboardEditSection,
+							},
+						],
 					},
 					{
 						path: 'block',
 						component: DashboardBlockComponent,
+						children: [
+							{
+								path: ':id',
+								component: DashboardEditBlock,
+							},
+						],
 					},
 					{
-						path: ':type/new',
-						component: DashboardCampusComponent,
-					},
-					{
-						path: ':type/:id',
-						component: DashboardBlockComponent,
+						path: 'section-block',
+						component: DashboardSectionBlockComponent,
+						children: [
+							{
+								path: ':id',
+								component: DashboardEditSectionBlock,
+							},
+						],
 					},
 				],
 			},

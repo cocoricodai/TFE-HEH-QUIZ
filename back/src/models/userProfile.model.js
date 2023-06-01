@@ -10,20 +10,20 @@ module.exports = (sequelize, DataTypes) => {
 				autoIncrement: false,
 			},
 			firstName: {
-				type: DataTypes.STRING,
+				type: DataTypes.STRING(50),
 				allowNull: false,
 				validate: {
 					notNull: {
-						msg: 'Please enter a firstname',
+						msg: 'models.userProfile.firstName.notNull',
 					},
 				},
 			},
 			lastName: {
-				type: DataTypes.STRING,
+				type: DataTypes.STRING(50),
 				allowNull: false,
 				validate: {
 					notNull: {
-						msg: 'Please enter a lastName',
+						msg: 'models.userProfile.lastName.notNull',
 					},
 				},
 			},

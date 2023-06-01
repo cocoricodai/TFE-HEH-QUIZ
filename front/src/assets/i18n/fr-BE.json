@@ -1,14 +1,35 @@
 {
+	"status": {
+		"internalServerError": "Server down",
+		"forbidden": "Vous ne pouvez pas y avoir accès",
+		"tooManyRequests": "Trop de demandes, merci d'aller plus lentement",
+		"error": "Il y a eu une erreur"
+	},
 	"auth": {
 		"forgot-password": {
 			"description": "Ne vous inquiétez pas. Réinitialiser votre mot de passe est facile. Tapez simplement votre e-mail.",
 			"label": "Mot de passe oublié",
-			"remember": "Vous vous souvenez de votre mot de passe ?"
+			"remember": "Vous vous souvenez de votre mot de passe ?",
+			"send": "Envoyer"
 		},
 		"login": { "register-label": "Vous n'avez pas encore de compte ?" },
 		"register": {
 			"label": "S'enregistrer",
-			"login-label": "Vous avez déja un compte ?"
+			"login-label": "Vous avez déja un compte ?",
+			"error": {
+				"mail": "L'e-mail doit provenir de la HEH.",
+				"password": "Votre mot de passe doit comporter entre 7 et 15 caractères et inclure au moins une lettre majuscule, un chiffre et un caractère spécial parmi la liste suivante : !@#%.",
+				"password-confirmation": "Le mot de passe doit correspondre"
+			}
+		},
+		"reset-password": {
+			"title": "Réinitialiser le mot de passe",
+			"remember": "Vous vous rapellez de votre compte ?",
+			"button": "Réinitialiser"
+		},
+		"verify-account": {
+			"success": "Votre compte a été activé avec succès!",
+			"error": "Il y a eu une erreur"
 		}
 	},
 	"form": {
@@ -24,19 +45,85 @@
 				"section": "Selectionner une section",
 				"title": "Titre",
 				"difficulty": "Difficulté",
-				"published": "Public",
+				"tags": "(séparés par des virgules)",
+				"public": "Public",
 				"suspend": "Oui, suspendre mon compte",
 				"hard": "Difficile",
 				"medium": "Moyen",
 				"easy": "Facile",
 				"next": "Suivant"
 			}
+		},
+		"button": {
+			"delete": "Supprimer",
+			"cancel": "Annuler",
+			"save": "Sauvegarder",
+			"start": "Commencer",
+			"back": "Retour"
 		}
+	},
+	"navbar": {
+		"home": "Accueil",
+		"my-quiz": "Mes quiz"
+	},
+	"new-quiz": {
+		"title": "Nouveau Quiz"
+	},
+	"my-quiz": {
+		"public": "Publics",
+		"private": "Privés",
+		"modify": {
+			"chart-title": "Pourcentage de réussite par rapport aux questions",
+			"confirm": "Etes vous sûr de supprimer ce quiz ?"
+		}
+	},
+	"home": {
+		"latest": "Récent",
+		"most-liked": "Les plus aimés"
 	},
 	"my-profile": {
 		"navbar": {
 			"personnal": "Informations personnelles",
 			"quiz-history": "Historique des quiz"
+		},
+		"personnal-password": {
+			"password": "Mot de passe",
+			"description": "Mettez à jour votre mot de passe associé à votre compte."
+		},
+		"personnal-langage": {
+			"langage": "Language",
+			"description": "Vous pouvez changer la langue par défaut"
+		},
+		"personnal-suspend": {
+			"suspend": "Suspendre le compte",
+			"description": "Vous ne souhaitez plus utiliser nos services ? Vous pouvez suspendre votre compte ici.",
+			"confirm": "Etes vous sûr de suspendre votre compte ?"
+		}
+	},
+	"routing": {
+		"auth": {
+			"login": "Login",
+			"register": "S'enregistrer",
+			"forgot-password": "Mot de passe oublié",
+			"reset-password": "Reinitialiser son mot de passe",
+			"verify-account": "Vérification du compte"
+		},
+		"application": {
+			"my-quiz": "Mes quiz",
+			"my-profile": "Mon profil",
+			"new-quiz": "Nouveau quiz",
+			"home": "Accueil",
+			"profile": "Profile"
+		}
+	},
+	"chart": {
+		"true": "Vrai",
+		"false": "Faux"
+	},
+	"quiz": {
+		"results": {
+			"your-answer": "Votre réponse",
+			"correct-answer": "Bonne réponse"
 		}
 	}
 }

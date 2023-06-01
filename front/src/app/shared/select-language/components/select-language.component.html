@@ -1,0 +1,10 @@
+<div class="my-3 flex justify-center">
+	<select
+		class="cursor-pointer bg-slate-100 dark:bg-slate-800"
+		(change)="languageChanged($event.target)"
+		[value]="getlanguage()"
+	>
+		<option name="fr-BE" value="fr-BE">FR</option>
+		<option name="en-US" value="en-US">EN</option>
+	</select>
+</div>

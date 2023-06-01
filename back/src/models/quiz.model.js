@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
 				validate: {
 					isIn: {
 						args: [['easy', 'medium', 'hard']],
-						msg: 'Must be easy, medium or hard',
+						msg: 'models.quiz.difficulty.validate',
 					},
 				},
 			},
@@ -39,15 +39,25 @@ module.exports = (sequelize, DataTypes) => {
 					isTagsValid(value) {
 						if (value) {
 							if (value.split(',').length > 3) {
-								throw new Error('Un tag ne peux pas avoir plus de 3 types');
+								throw new Error('model.quiz.tags.validate');
 							}
 						}
 					},
 				},
 			},
-			isPublished: {
+			isPublic: {
 				type: DataTypes.BOOLEAN,
-				default: false,
+				defaultValue: false,
+				allowNull: false,
+			},
+			isActive: {
+				type: DataTypes.BOOLEAN,
+				defaultValue: true,
+				allowNull: false,
+			},
+			total: {
+				type: DataTypes.INTEGER,
+				defaultValue: 0,
 				allowNull: false,
 			},
 			user_id: {
@@ -70,7 +80,7 @@ module.exports = (sequelize, DataTypes) => {
 		{
 			timestamps: true,
 			createdAt: 'createdAt',
-			updatedAt: false,
+			updatedAt: 'updatedAt',
 			tableName: 'Quiz',
 		}
 	);

@@ -1,0 +1,7 @@
+<router-outlet></router-outlet>
+<table-list
+	[columnsConfig]="sectionBlocks[0] | columnHeader"
+	[rows]="sectionBlocks"
+	(delete)="deleteSectionBlock($event)"
+	title="Section Block"
+></table-list>

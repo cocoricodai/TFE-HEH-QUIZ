@@ -10,6 +10,7 @@ const apiRouteV1 = require('./src/routes/v1/api.route'); // All routes are in th
 const logger = require('./src/helpers/logger/logger'); // Logger
 const { rateLimiterMiddleware } = require('./src/middlewares/rateLimiter');
 const i18n = require('i18n');
+const { deleteInactiveQuizSince } = require('./src/cron/cron');
 
 const envConfig = require('./src/config/env.config');
 
@@ -46,6 +47,9 @@ app.all('*', ({ res }) => {
 		'Unable to find the requested resource. Try another URL.'
 	);
 });
+
+// Cron
+setInterval(deleteInactiveQuizSince, 24 * 60 * 60 * 1000);
 
 // Listening to the port
 app.listen(port, () => {

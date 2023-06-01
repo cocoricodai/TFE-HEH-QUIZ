@@ -1,30 +1,19 @@
 const responseHelper = require('../../helpers/response'); // Formatting the json response
 const { Section, Campus } = require('../../config/db.config');
-const { UniqueConstraintError, ValidationError } = require('sequelize');
 const errorHandler = require('../../helpers/errorHandler');
 
 // Get All Sections
 exports.getAllSections = async (req, res) => {
 	try {
-		const section = await Section.findAll({
+		const sections = await Section.findAll({
 			include: {
 				model: Campus,
+				as: 'campus',
 			},
 		});
 
-		const sections = section.map((section) => {
-			return {
-				id: section.id,
-				campus: {
-					id: section.Campus.id,
-					name: section.Campus.name,
-				},
-				name: section.name,
-			};
-		});
-
 		responseHelper.successWithData(res, 'All sections', sections);
-	} catch {
+	} catch (err) {
 		responseHelper.errorServer(req, res);
 	}
 };
@@ -62,6 +51,7 @@ exports.getOneSection = async (req, res) => {
 			attributes: ['name'],
 			include: {
 				model: Campus,
+				as: 'campus',
 			},
 		});
 		if (!section)

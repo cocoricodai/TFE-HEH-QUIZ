@@ -1,7 +1,13 @@
 const { format, createLogger, transports } = require('winston');
 const { combine, timestamp, prettyPrint } = format;
+const dayjs = require('dayjs');
 
 function buildProdLogger() {
+	const year = dayjs().year();
+	const month = dayjs().format('MMMM');
+	const day = dayjs().format('DD');
+	const logPath = `logs/${year}/${month}/${day}`;
+
 	return createLogger({
 		level: 'debug',
 		format: combine(
@@ -13,7 +19,7 @@ function buildProdLogger() {
 		transports: [
 			new transports.File({
 				level: 'error',
-				filename: 'logs/error.log',
+				filename: `${logPath}/error.log`,
 			}),
 			new transports.Console(),
 		],

@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 				unique: {
 					name: 'UniqueBlock',
-					message: 'This block already exists',
+					msg: 'models.block.unique',
 				},
 			},
 		},

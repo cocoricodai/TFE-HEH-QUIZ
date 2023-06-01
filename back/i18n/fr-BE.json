@@ -1,3 +1,82 @@
 {
-	"welcome": "Bienvenue to the API Version 1"
+	"welcome": "Bienvenue to the API Version 1",
+	"models": {
+		"block": {
+			"unique": "Ce block existe déjà"
+		},
+		"campus": {
+			"unique": "models.campus.unique"
+		},
+		"question": {
+			"choices": {
+				"min-max": "Min 2 et max 4 réponses"
+			},
+			"points": {
+				"min-max": "Valeur entre 1 et 10"
+			}
+		},
+		"quiz": {
+			"difficulty": {
+				"validate": "Doit être easy, medium ou hard"
+			},
+			"tags": {
+				"validate": "Le tag ne peut avoir que 3 types"
+			}
+		},
+		"role": {
+			"unique": "Ce role existe déjà"
+		},
+		"section": {
+			"unique": "Cette section existe déjà"
+		},
+		"user": {
+			"email": {
+				"unique": "Cet e-mail existe déjà",
+				"notNull": "Veuillez saisir une email",
+				"validate": "L'e-mail doit provenir de la HEH : prenom.nom@std.heh.be ou prenom.nom@heh.be"
+			},
+			"password": {
+				"notNull": "Veuillez entrer un mot de passe",
+				"validate": "Votre mot de passe doit comporter entre 7 et 15 caractères et inclure au moins une lettre majuscule, un chiffre et un caractère spécial parmi la liste suivante : !@#%."
+			}
+		},
+		"userProfile": {
+			"firstName": {
+				"notNull": "Veuillez entrer un prénom"
+			},
+			"lastName": {
+				"notNull": "Veuillez entrer un nom"
+			}
+		}
+	},
+	"controller": {
+		"auth": {
+			"register": {
+				"account-created": "Votre compte à été créé avec succès! Veuillez vérifier votre email pour confirmer votre inscription"
+			},
+			"verify-account": {
+				"notUser": "Cet utilisateur n'existe pas",
+				"invalidToken": "Jeton invalide",
+				"alreadyVerify": "Utilisateur déjà vérifié",
+				"success": "Votre compte a été vérifié"
+			},
+			"login": {
+				"notUser": "Cet utilisateur n'existe pas",
+				"activeAccount": "Activez votre compte par mail",
+				"wrongPassword": "Mot de passe incorrect",
+				"success": "Connexion réussie"
+			},
+			"forgot-password": {
+				"notUser": "Cet utilisateur n'existe pas",
+				"success": "Mail envoyé ! Vérifiez votre boit de réception"
+			},
+			"reset-password": {
+				"notUser": "Cet utilisateur n'existe pas",
+				"success": "Mot de passe mis à jour avec succès"
+			},
+			"refresh-password": {
+				"success": "Jeton de rafraichissement mis à jours"
+			}
+		}
+	}
 }

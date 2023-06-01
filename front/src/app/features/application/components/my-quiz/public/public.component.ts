@@ -7,10 +7,10 @@ import { TargetLoadingDirective } from 'src/app/shared/loading/directives/target
 
 @UntilDestroy()
 @Component({
-	selector: 'feature-draft',
-	templateUrl: './draft.component.html',
+	selector: 'feature-public',
+	templateUrl: './public.component.html',
 })
-export class DraftComponent implements OnInit {
+export class PublicComponent implements OnInit {
 	@ViewChild('loading', { static: true })
 	private _loading!: TargetLoadingDirective;
 
@@ -23,7 +23,7 @@ export class DraftComponent implements OnInit {
 	ngOnInit(): void {
 		this._loading.startLoading();
 		this._quizApiService
-			.getOwnQuiz(QuizState.DRAFT)
+			.getOwnQuiz(QuizState.PUBLIC)
 			.pipe(untilDestroyed(this))
 			.subscribe((quizs) => {
 				this._loading.stopLoading();

@@ -30,6 +30,10 @@ export class BlockApiService {
 		);
 	}
 
+	public createOneBlock(payload: Block) {
+		return this._http.post(this.blockUrl, payload);
+	}
+
 	public getBlocksBySection(id: number): Observable<Block[]> {
 		return this._http
 			.get(this.blockUrl + ApiConstants.BlockEndpoint.SECTION + '/' + id)
@@ -46,6 +50,10 @@ export class BlockApiService {
 				return TypedJSON.parse(res, BlockObjectResponse)!.data;
 			})
 		);
+	}
+
+	public modifyOneBlock(id: number, payload: Block) {
+		return this._http.put(this.blockUrl + '/' + id, payload);
 	}
 
 	public deleteOneBlock(id: number) {

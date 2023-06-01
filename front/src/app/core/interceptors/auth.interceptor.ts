@@ -11,6 +11,8 @@ import { LocalStorageConstants } from '../constants/local-storage.constants';
 import { AuthenticationApiService } from '../services/api/authentication-api.service';
 import { LocalStorageManagerService } from '../services/local-storage/local-storage-manager.service';
 import { AuthenticationService } from '../services/authentication.service';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslateManagerService } from '../services/translate/translate-manager.service';
 
 @Injectable({
 	providedIn: 'root',
@@ -19,7 +21,8 @@ export class AuthInterceptor implements HttpInterceptor {
 	constructor(
 		private _localStorageManagerService: LocalStorageManagerService,
 		private _auhtenticationApiService: AuthenticationApiService,
-		private _authenticationService: AuthenticationService
+		private _authenticationService: AuthenticationService,
+		private _translateManagerService: TranslateManagerService
 	) {}
 
 	intercept(
@@ -35,6 +38,13 @@ export class AuthInterceptor implements HttpInterceptor {
 				Authorization: `Bearer ${token}`,
 			},
 		});
+
+		if (this._translateManagerService.getCurrentLanguage()) {
+			cloned.headers.append(
+				'Accept-Language',
+				this._translateManagerService.getCurrentLanguage()
+			);
+		}
 
 		return next.handle(cloned).pipe(
 			catchError((err) => {

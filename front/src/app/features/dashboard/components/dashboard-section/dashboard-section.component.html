@@ -1,6 +1,8 @@
+<router-outlet></router-outlet>
 <table-list
 	*ngIf="sections"
 	[columnsConfig]="sections[0] | columnHeader"
 	[rows]="sections"
+	(delete)="deleteSection($event)"
 	title="Sections"
 ></table-list>

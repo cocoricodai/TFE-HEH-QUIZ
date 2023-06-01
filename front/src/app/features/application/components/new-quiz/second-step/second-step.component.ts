@@ -1,14 +1,106 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Question } from 'src/app/core/models/question.model';
 import { Quiz } from 'src/app/core/models/quiz.model';
+import { ResponseSurvey } from 'src/app/core/models/response.survey.interface';
+import { TranslateManagerService } from 'src/app/core/services/translate/translate-manager.service';
+import { SurveyModel } from 'survey-angular';
 
 @Component({
 	selector: 'feature-new-quiz-second-step',
 	templateUrl: './second-step.component.html',
 	styleUrls: ['../new-quiz.component.css'],
 })
-export class NewQuizSecondStepComponent implements OnInit {
+export class NewQuizSecondStepComponent {
+	constructor(private _translateManagerService: TranslateManagerService) {}
+
+	public surveyJson = {
+		logoPosition: 'right',
+		pages: [
+			{
+				name: 'page1',
+				elements: [
+					{
+						type: 'paneldynamic',
+						name: 'questions',
+						titleLocation: 'hidden',
+						isRequired: true,
+						templateElements: [
+							{
+								type: 'text',
+								name: 'title',
+								title: this._translateManagerService.getTranslation(
+									'form.input.label.title'
+								),
+								titleLocation: 'top',
+								isRequired: true,
+								maxLength: 255,
+							},
+							{
+								type: 'file',
+								name: 'image',
+								title: 'Image',
+								titleLocation: 'top',
+								acceptedTypes: 'image/*',
+								waitForUpload: true,
+							},
+							{
+								type: 'text',
+								name: 'correctAnswer',
+								title: 'Correct Answer',
+								titleLocation: 'top',
+								isRequired: true,
+								maxLength: 255,
+							},
+							{
+								type: 'text',
+								name: 'wrongAnswer1',
+								title: 'Wrong Answer',
+								titleLocation: 'top',
+								isRequired: true,
+								maxLength: 255,
+							},
+							{
+								type: 'text',
+								name: 'wrongAnswer2',
+								title: 'Wrong answer 2',
+								titleLocation: 'top',
+								maxLength: 255,
+							},
+							{
+								type: 'text',
+								name: 'wrongAnswer3',
+								title: 'Wrong Answer 3',
+								titleLocation: 'top',
+								maxLength: 255,
+							},
+							{
+								type: 'text',
+								name: 'points',
+								title: 'Points',
+								titleLocation: 'top',
+								defaultValueExpression: '1',
+								isRequired: true,
+								inputType: 'number',
+								min: 1,
+								max: 10,
+								step: 1,
+							},
+						],
+						templateTabTitle: 'Question {panelIndex}',
+						panelCount: 4,
+						minPanelCount: 4,
+						maxPanelCount: 20,
+						showQuestionNumbers: 'onPanel',
+						renderMode: 'tab',
+					},
+				],
+				navigationButtonsVisibility: 'show',
+			},
+		],
+		widthMode: 'static',
+	};
+
 	// Inputs & Outputs
 	@Input()
 	public quizInformations!: Quiz;
@@ -18,70 +110,26 @@ export class NewQuizSecondStepComponent implements OnInit {
 
 	// Public properties
 	public secondStepForm!: FormGroup;
-	public questions: Question[] = [];
-	public selectedFile!: string;
 
-	// Events
-	public onFileSelected(event: any): void {
-		const file = event.target.files[0];
+	public quizComplete(sender: SurveyModel) {
+		const responses: ResponseSurvey[] = sender.data
+			.questions as ResponseSurvey[];
 
-		const reader = new FileReader();
+		const responseFormated = responses.map((response) => {
+			let choices = [response.correctAnswer, response.wrongAnswer1];
 
-		reader.onload = () => {
-			const base64String = reader.result;
-			this.selectedFile = base64String as string;
-		};
+			if (response?.wrongAnswer2) choices.push(response?.wrongAnswer2);
 
-		reader.readAsDataURL(file);
-	}
+			if (response?.wrongAnswer3) choices.push(response?.wrongAnswer3);
 
-	public onAdd(): void {
-		let choices = [
-			this.secondStepForm.value.correctAnswer,
-			this.secondStepForm.value.wrongAnswer1,
-		];
-
-		this.secondStepForm.value.wrongAnswer2 === '' ||
-		this.secondStepForm.value.wrongAnswer2 === null
-			? ''
-			: choices.push(this.secondStepForm.value.wrongAnswer2);
-
-		this.secondStepForm.value.wrongAnswer3 === '' ||
-		this.secondStepForm.value.wrongAnswer3 === null
-			? ''
-			: choices.push(this.secondStepForm.value.wrongAnswer3);
-
-		this.questions.push({
-			title: this.secondStepForm.value?.title,
-			image: this.selectedFile,
-			choices,
-			correctAnswer: this.secondStepForm.value.correctAnswer,
-			points: this.secondStepForm.value.points,
+			return {
+				title: response.title,
+				image: response?.image ? response.image[0].content : null,
+				correctAnswer: response.correctAnswer,
+				choices,
+				points: response.points,
+			};
 		});
-
-		this.selectedFile = '';
-		this.secondStepForm.reset({ points: 1 });
-	}
-
-	onSubmit(): void {
-		this.secondStep.emit(this.questions);
-	}
-
-	// Lifecycle
-	ngOnInit(): void {
-		this.setupForm();
-	}
-
-	// Inner works
-	private setupForm(): void {
-		this.secondStepForm = new FormGroup({
-			title: new FormControl('', [Validators.required]),
-			image: new FormControl(''),
-			correctAnswer: new FormControl('', [Validators.required]),
-			wrongAnswer1: new FormControl('', [Validators.required]),
-			wrongAnswer2: new FormControl(''),
-			wrongAnswer3: new FormControl(''),
-			points: new FormControl(1, [Validators.required]),
-		});
+		this.secondStep.emit(responseFormated);
 	}
 }

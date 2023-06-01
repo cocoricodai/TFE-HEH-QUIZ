@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.STRING,
 				unique: {
 					name: 'UniqueCampus',
-					message: 'This campus already exists',
+					msg: 'models.campus.unique',
 				},
 				allowNull: false,
 			},

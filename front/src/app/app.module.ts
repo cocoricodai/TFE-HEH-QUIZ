@@ -11,17 +11,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './core/components/app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { ToastrModule } from 'ngx-toastr';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 
-import {
-	TranslateModule,
-	TranslateLoader,
-	TranslatePipe,
-} from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CommonModule } from '@angular/common';
 import { ErrorHandlerInterceptor } from './core/interceptors/error-handler.interceptor';
+import { TitleStrategy } from '@angular/router';
+import { TitleManagerService } from './core/services/title/title-manager.service';
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -54,6 +51,10 @@ export function createTranslateLoader(http: HttpClient) {
 			provide: HTTP_INTERCEPTORS,
 			useClass: ErrorHandlerInterceptor,
 			multi: true,
+		},
+		{
+			provide: TitleStrategy,
+			useClass: TitleManagerService,
 		},
 	],
 	bootstrap: [AppComponent],

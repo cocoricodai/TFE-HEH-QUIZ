@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ToastrService } from 'ngx-toastr';
 import { Question } from 'src/app/core/models/question.model';
 import { Quiz } from 'src/app/core/models/quiz.model';
 import { QuizApiService } from 'src/app/core/services/api/quiz-api.service';
 
+@UntilDestroy()
 @Component({
 	selector: 'feature-new-quiz',
 	templateUrl: './new-quiz.component.html',
@@ -31,12 +33,15 @@ export class NewQuizComponent {
 	public secondStepForm(questions: Question[]) {
 		this.quiz.questions = questions;
 
-		this._quizApiService.createOneQuiz(this.quiz).subscribe({
-			next: (el) => {
-				this._toastrService.success('All ok');
-				this._router.navigateByUrl('/');
-			},
-			error: (err) => this._toastrService.error(err),
-		});
+		this._quizApiService
+			.createOneQuiz(this.quiz)
+			.pipe(untilDestroyed(this))
+			.subscribe({
+				next: (el) => {
+					this._toastrService.success('Quiz created !');
+					this._router.navigateByUrl('/');
+				},
+				error: (err) => this._toastrService.error(err),
+			});
 	}
 }

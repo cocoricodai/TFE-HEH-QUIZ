@@ -198,7 +198,10 @@ export class PersonnalInformationComponent implements OnInit {
 							window.location.reload();
 						});
 					},
-					error: (err) => this._toastr.success('Error'),
+					error: () =>
+						this._toastr.error(
+							this._translateManagerService.getTranslation('status.error')
+						),
 				});
 		} else {
 			this.isEditable = false;
@@ -207,30 +210,39 @@ export class PersonnalInformationComponent implements OnInit {
 
 	public onUpdatePassword(): void {
 		const password: { password: string } = this.passwordForm.value;
-		this._userApiService.updatePassword(password).subscribe({
-			next: () => {
-				this._toastr.success('Password changed !');
-			},
-			error: (err) => {
-				this._toastr.error(err.error.message);
-			},
-			complete: () => {
-				this.passwordForm.reset();
-				console.log('Reset password finit');
-			},
-		});
+		this._userApiService
+			.updatePassword(password)
+			.pipe(untilDestroyed(this))
+			.subscribe({
+				next: () => {
+					this._toastr.success('Password changed !');
+				},
+				error: (err) => {
+					this._toastr.error(err.error.message);
+				},
+				complete: () => {
+					this.passwordForm.reset();
+				},
+			});
 	}
 
 	public suspendAccount(): void {
-		const sure = window.confirm('Are you sure to suspend your account ?');
+		const sure = window.confirm(
+			this._translateManagerService.getTranslation(
+				'my-profile.personnal-suspend.confirm'
+			)
+		);
 
 		if (sure) {
-			this._userApiService.suspendAccount().subscribe({
-				next: () => {
-					this._toastr.success('Account suspended !');
-					this._authenticationService.logout();
-				},
-			});
+			this._userApiService
+				.suspendAccount()
+				.pipe(untilDestroyed(this))
+				.subscribe({
+					next: () => {
+						this._toastr.success('Account suspended !');
+						this._authenticationService.logout();
+					},
+				});
 		}
 	}
 

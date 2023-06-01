@@ -1,0 +1,52 @@
+<h3 class="pb-8 text-2xl">
+	<span class="text-purple-600 dark:text-purple-500">Your Score : </span>
+	<span class="font-bold">{{ score }} / {{ quiz.total }}</span>
+</h3>
+<table class="w-full max-w-full border-collapse">
+	<thead>
+		<tr>
+			<th>Question</th>
+			<th>{{ 'form.input.label.title' | translate }}</th>
+			<th>{{ 'quiz.results.your-answer' | translate }}</th>
+			<th>{{ 'quiz.results.correct-answer' | translate }}</th>
+			<th>Points</th>
+			<th>Total</th>
+		</tr>
+	</thead>
+
+	<tbody class="text-center">
+		<tr
+			*ngFor="let answer of answers; let i = index"
+			class="p-2 odd:bg-gray-200 odd:dark:bg-purple-300 odd:dark:text-black"
+		>
+			<td>{{ i + 1 }}</td>
+			<td>{{ quiz.questions[i].title }}</td>
+			<td>{{ answer.answer }}</td>
+			<td>{{ quiz.questions[i].correctAnswer }}</td>
+			<td
+				class="{{
+					quiz.questions[i].correctAnswer === answer.answer
+						? 'text-green-600'
+						: 'text-red-600'
+				}}"
+			>
+				{{ quiz.questions[i].points }}
+			</td>
+			<td>
+				{{
+					quiz.questions[i].correctAnswer === answer.answer
+						? quiz.questions[i].points
+						: '0'
+				}}
+			</td>
+		</tr>
+		<tr class="border-t-2 border-black dark:border-white">
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>{{ score }}</td>
+		</tr>
+	</tbody>
+</table>

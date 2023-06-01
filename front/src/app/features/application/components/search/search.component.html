@@ -1,0 +1,44 @@
+<div>
+	<div class="relative mx-auto flex justify-center gap-3 text-gray-600">
+		<select class="max-w-[100px]" [(ngModel)]="selectedOption">
+			<option name="user" value="user">User</option>
+			<option name="quiz" value="quiz">Quiz</option>
+		</select>
+
+		<div class="relative w-[400px]">
+			<input
+				(input)="onInputChange($event)"
+				(focus)="isSearchFocused = true"
+				(blur)="isSearchFocused = false"
+				class="w-[400px]"
+				type="search"
+				name="search"
+				placeholder="Search"
+			/>
+			<div class="absolute z-50 mt-1 w-[400px] rounded-lg bg-white">
+				<ng-container *ngIf="quizs && selectedOption === 'quiz'">
+					<div
+						*ngFor="let quiz of quizs"
+						class="cursor-pointer border-b px-5 py-1 last:border-none hover:text-purple-500"
+						(click)="navigate('quiz', quiz.id)"
+					>
+						<p>
+							{{ quiz.title }} | {{ quiz.profile?.firstName }}
+							{{ quiz.profile?.lastName }}
+						</p>
+					</div>
+				</ng-container>
+
+				<ng-container *ngIf="users && selectedOption === 'user'">
+					<div
+						*ngFor="let user of users"
+						class="cursor-pointer border-b px-5 py-1 last:border-none hover:text-purple-500"
+						(click)="navigate('profile', user.id)"
+					>
+						<p>{{ user.email }}</p>
+					</div>
+				</ng-container>
+			</div>
+		</div>
+	</div>
+</div>

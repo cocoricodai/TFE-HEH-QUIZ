@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { RoleConstants } from 'src/app/core/constants/roles.constants.enums';
 import { Quiz } from 'src/app/core/models/quiz.model';
 import { Block, Section } from 'src/app/core/models/response-api.model';
@@ -7,6 +8,7 @@ import { BlockApiService } from 'src/app/core/services/api/block-api.service';
 import { SectionApiService } from 'src/app/core/services/api/section-api.service';
 import { UserService } from 'src/app/core/services/user.service';
 
+@UntilDestroy()
 @Component({
 	selector: 'feature-new-quiz-first-step',
 	templateUrl: './first-step.component.html',
@@ -26,11 +28,14 @@ export class NewQuizFirstStepComponent implements OnInit {
 	// Events
 	public onSelectSection(event: any): void {
 		const section_id: number = event.value;
-		this._blockApiService.getBlocksBySection(section_id).subscribe({
-			next: (blocks) => {
-				this.blocks = blocks;
-			},
-		});
+		this._blockApiService
+			.getBlocksBySection(section_id)
+			.pipe(untilDestroyed(this))
+			.subscribe({
+				next: (blocks) => {
+					this.blocks = blocks;
+				},
+			});
 	}
 
 	public onSubmit(): void {
@@ -70,7 +75,7 @@ export class NewQuizFirstStepComponent implements OnInit {
 			]),
 			section_id: new FormControl(''),
 			block_id: new FormControl(''),
-			isPublished: new FormControl(true),
+			isPublic: new FormControl(true),
 		});
 
 		if (this.isTeacher) {
@@ -78,6 +83,7 @@ export class NewQuizFirstStepComponent implements OnInit {
 			this.firstStepForm.get('block_id')?.addValidators(Validators.required);
 			this._sectionApiService
 				.getSectionsByCampus(user.profile.campus.id)
+				.pipe(untilDestroyed(this))
 				.subscribe({
 					next: (sections) => (this.sections = sections),
 				});

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
 import { AuthenticationApiService } from 'src/app/core/services/api/authentication-api.service';
 import { LoadingService } from 'src/app/shared/loading/services/loading.service';
+@UntilDestroy()
 @Component({
 	selector: 'forgot-password-form',
 	templateUrl: './forgot-password-form.component.html',
@@ -39,10 +41,13 @@ export class ForgotPasswordFormComponent implements OnInit {
 		const payload: { email: string } = this.forgotPasswordForm.value;
 		this._authenticationApiService
 			.forgotPassword(payload)
-			.pipe(finalize(() => this._loadingService.stopLoading()))
+			.pipe(
+				untilDestroyed(this),
+				finalize(() => this._loadingService.stopLoading())
+			)
 			.subscribe({
-				next: () => {
-					this._toastr.info('Go look your mail');
+				next: (el) => {
+					this._toastr.success(el?.message);
 					this._router.navigate(['/auth/login']);
 				},
 				error: (err) => {

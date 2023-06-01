@@ -18,12 +18,13 @@
 				>
 					{{ columnConfig.headerName }}
 				</th>
+				<th>Actions</th>
 			</tr>
 		</thead>
 
 		<tbody>
 			<tr *ngFor="let row of rows">
-				<td *ngFor="let columnConfig of columnsConfig" [routerLink]="[row.id]">
+				<td *ngFor="let columnConfig of columnsConfig">
 					<ng-container [ngSwitch]="getType(row[columnConfig.headerName])">
 						<div *ngSwitchCase="'string'">
 							{{ row[columnConfig.headerName] }}
@@ -37,6 +38,109 @@
 							"
 						></div>
 					</ng-container>
+				</td>
+				<td>
+					<div class="inline-flex gap-2">
+						<svg
+							class="cursor-pointer"
+							[routerLink]="[row.id]"
+							width="20px"
+							fill="#000000"
+							viewBox="0 0 64 64"
+							version="1.1"
+							xmlns="http://www.w3.org/2000/svg"
+							xmlns:xlink="http://www.w3.org/1999/xlink"
+							xml:space="preserve"
+							xmlns:serif="http://www.serif.com/"
+							style="
+								fill-rule: evenodd;
+								clip-rule: evenodd;
+								stroke-linejoin: round;
+								stroke-miterlimit: 2;
+							"
+						>
+							<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+							<g
+								id="SVGRepo_tracerCarrier"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							></g>
+							<g id="SVGRepo_iconCarrier">
+								<rect
+									id="Icons"
+									x="-128"
+									y="-64"
+									width="1280"
+									height="800"
+									style="fill: none"
+								></rect>
+								<g id="Icons1" serif:id="Icons">
+									<g id="Pen">
+										<path
+											d="M56.009,51.832l0,4.2l-33.652,-0.026l4.709,-4.174l28.943,0Z"
+											style="fill-rule: nonzero"
+										></path>
+										<path
+											d="M48.453,8.119c1.65,0 2.506,0.129 4.753,2.011c2.294,1.922 2.707,3.42 2.803,5.088c0.102,1.795 -0.504,3.975 -2.188,5.681l-31.961,31.961c-0.52,0.475 -0.63,0.449 -0.977,0.553l-10.226,2.556c-1.472,0.299 -2.854,-1.049 -2.55,-2.549l2.557,-10.226c0.1,-0.334 0.133,-0.517 0.553,-0.977c10.696,-10.696 21.195,-21.593 32.09,-32.087c1.421,-1.335 3.497,-2.011 5.146,-2.011Zm0,4.143c-0.86,0.016 -1.698,0.371 -2.311,0.976l-31.54,31.541l-1.566,6.261l6.262,-1.565c10.544,-10.544 21.419,-20.768 31.63,-31.634c1.674,-1.825 0.444,-5.453 -2.306,-5.577c-0.056,-0.002 -0.112,-0.003 -0.169,-0.002Z"
+											style="fill-rule: nonzero"
+										></path>
+									</g>
+								</g>
+							</g>
+						</svg>
+						<svg
+							class="cursor-pointer"
+							(click)="onDelete(row.id)"
+							width="20px"
+							viewBox="0 0 24 24"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+							stroke="#ef4444"
+						>
+							<g
+								id="SVGRepo_tracerCarrier"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							></g>
+							<g id="SVGRepo_iconCarrier">
+								<path
+									d="M10 12V17"
+									stroke="#ef4444"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								></path>
+								<path
+									d="M14 12V17"
+									stroke="#ef4444"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								></path>
+								<path
+									d="M4 7H20"
+									stroke="#ef4444"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								></path>
+								<path
+									d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+									stroke="#ef4444"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								></path>
+								<path
+									d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+									stroke="#ef4444"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								></path>
+							</g>
+						</svg>
+					</div>
 				</td>
 			</tr>
 		</tbody>

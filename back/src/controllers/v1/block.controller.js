@@ -1,5 +1,5 @@
 const responseHelper = require('../../helpers/response'); // Formatting the json response
-const { Block, Section } = require('../../config/db.config');
+const { Block, SectionBlock } = require('../../config/db.config');
 const errorHandler = require('../../helpers/errorHandler');
 
 // Get All Blocks
@@ -85,8 +85,8 @@ exports.getAllBlocksFromSection = async (req, res) => {
 		const blocksBySection = await Block.findAll({
 			include: [
 				{
-					model: Section,
-					where: { id },
+					model: SectionBlock,
+					where: { section_id: id },
 					attributes: [],
 				},
 			],

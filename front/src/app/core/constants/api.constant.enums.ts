@@ -14,6 +14,7 @@ export namespace ApiConstants {
 		BLOCK = '/block',
 		USER = '/user',
 		QUIZ = '/quiz',
+		SECTIONBLOCK = '/section-block',
 	}
 
 	export enum AuthEndpoint {

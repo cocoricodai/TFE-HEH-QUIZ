@@ -3,6 +3,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { map } from 'rxjs';
 import { QuizApiService } from 'src/app/core/services/api/quiz-api.service';
 import { UserApiService } from 'src/app/core/services/api/user-api.service';
+import { ChartLineValues } from 'src/app/shared/chart/models/chart-line-values.interface';
 import { ChartPieValues } from 'src/app/shared/chart/models/chart-pie-values.interface';
 
 @UntilDestroy()
@@ -15,6 +16,8 @@ export class DashboardDefaultViewComponent implements OnInit {
 	public usersCount!: ChartPieValues;
 	public totalUsers = 0;
 	public totalQuiz!: number;
+	public totalQuizDone!: number;
+	public stats!: ChartLineValues;
 
 	public userCountIsLoading = true;
 
@@ -57,5 +60,27 @@ export class DashboardDefaultViewComponent implements OnInit {
 			.getQuizCount()
 			.pipe(untilDestroyed(this))
 			.subscribe((quiz) => (this.totalQuiz = quiz.count));
+
+		this._quizApiService
+			.getQuizDoneCount()
+			.pipe(untilDestroyed(this))
+			.subscribe((quiz) => (this.totalQuizDone = quiz.count));
+
+		this._quizApiService
+			.getQuizDoneStats()
+			.pipe(untilDestroyed(this))
+			.subscribe((el) => {
+				const datas: number[] = [];
+				const labels: string[] = [];
+				el.map((e) => {
+					datas.push(e.count);
+					labels.push(e.date);
+				});
+
+				this.stats = {
+					datas: datas,
+					labels: labels,
+				};
+			});
 	}
 }

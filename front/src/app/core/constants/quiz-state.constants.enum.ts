@@ -1,4 +1,4 @@
 export enum QuizState {
-	PUBLISHED = 'published',
-	DRAFT = 'draft',
+	PUBLIC = 'public',
+	PRIVATE = 'private',
 }

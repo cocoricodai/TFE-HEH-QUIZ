@@ -1,6 +1,9 @@
 import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 @jsonObject
 export class Question {
+	@jsonMember(Number)
+	public id?: number;
+
 	@jsonMember(String)
 	public title!: string;
 
@@ -17,6 +20,7 @@ export class Question {
 	public points!: number;
 
 	constructor(fields: {
+		id?: number;
 		title: string;
 		image: string | null;
 		choices: string[];

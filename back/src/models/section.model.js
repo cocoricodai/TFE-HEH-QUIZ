@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.STRING,
 				unique: {
 					name: 'UniqueSection',
-					message: 'This section already exists',
+					message: 'models.section.unique',
 				},
 				allowNull: false,
 			},

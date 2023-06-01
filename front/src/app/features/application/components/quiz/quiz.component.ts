@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ToastrService } from 'ngx-toastr';
+import { AnswerQuiz } from 'src/app/core/models/answer-quiz.interface';
 import { Question } from 'src/app/core/models/question.model';
 import { Quiz } from 'src/app/core/models/quiz.model';
 import { QuizApiService } from 'src/app/core/services/api/quiz-api.service';
 import { FunctionUtils } from 'src/app/core/utils/function.utils';
 
+@UntilDestroy()
 @Component({
 	selector: 'feature-quiz',
 	templateUrl: './quiz.component.html',
@@ -14,24 +18,26 @@ export class QuizComponent implements OnInit {
 	public currentStep = 1;
 	public quiz!: Quiz;
 	public score = 0;
-	public currentQuestion = 0;
-	public isLastQuestion = false;
+	public answers!: AnswerQuiz[];
 
 	// Lifecycle
 	constructor(
 		private _quizApiService: QuizApiService,
 		private _route: ActivatedRoute,
-		private _router: Router
+		private _toastrService: ToastrService
 	) {}
 
 	ngOnInit(): void {
 		this._route.params.subscribe((params) => {
-			this._quizApiService.getOneQuiz(+params['id']).subscribe({
-				next: (quiz) => {
-					this.quiz = quiz;
-					this.shuffleQuestions();
-				},
-			});
+			this._quizApiService
+				.getOneQuiz(+params['id'])
+				.pipe(untilDestroyed(this))
+				.subscribe({
+					next: (quiz) => {
+						this.quiz = quiz;
+						this.shuffleQuestions();
+					},
+				});
 		});
 	}
 
@@ -41,19 +47,19 @@ export class QuizComponent implements OnInit {
 		this.currentStep = 2;
 	}
 
-	public endQuiz(): void {
+	public endQuiz(value: { score: number; responses: AnswerQuiz[] }): void {
+		this._quizApiService
+			.createResult(this.quiz.id, value.responses)
+			.pipe(untilDestroyed(this))
+			.subscribe({
+				next: () => this._toastrService.success('Result created'),
+			});
+		this.answers = value.responses;
+		this.score = value.score;
 		this.currentStep = 3;
 	}
 
 	// Inner works
-	private addPoints(selectedAnswer: string): void {
-		if (
-			selectedAnswer === this.quiz.questions[this.currentQuestion].correctAnswer
-		) {
-			this.score += this.quiz.questions[this.currentQuestion].points;
-		}
-	}
-
 	private shuffleQuestions(): void {
 		// Shuffle questions array
 		this.quiz.questions = FunctionUtils.shuffleArray<Question>(

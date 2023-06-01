@@ -18,7 +18,7 @@
 		"
 		class="error"
 	>
-		The e-mail must be from the HEH.
+		{{ 'auth.register.error.mail' | translate }}
 	</div>
 
 	<label for="password">
@@ -36,9 +36,7 @@
 		"
 		class="error"
 	>
-		Your password must be between 7 and 15 characters long and include at least
-		one uppercase letter, one digit, and one special character from the
-		following list: !@#%.
+		{{ 'auth.register.error.password' | translate }}
 	</div>
 
 	<label for="passwordConfirmation">
@@ -53,7 +51,7 @@
 		*ngIf="registerForm.errors?.['passwordMismatchError'] && registerForm.get('passwordConfirmation')?.touched"
 		class="error"
 	>
-		Password must match
+		{{ 'auth.register.error.password-confirmation' | translate }}
 	</div>
 
 	<select formControlName="campus_id" (change)="onSelectCampus($event.target)">

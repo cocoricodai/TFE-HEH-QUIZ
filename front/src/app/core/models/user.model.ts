@@ -53,7 +53,14 @@ export class UserModel {
 	@jsonMember(UserProfileModel)
 	public profile!: UserProfileModel;
 
-	constructor(fields: { email: string; profile: UserProfileModel }) {
+	@jsonMember(Boolean)
+	public isActive?: boolean;
+
+	constructor(fields: {
+		email: string;
+		profile: UserProfileModel;
+		isActive?: boolean;
+	}) {
 		Object.assign(this, fields);
 	}
 }

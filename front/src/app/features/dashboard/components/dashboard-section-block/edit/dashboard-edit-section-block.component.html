@@ -1,0 +1,29 @@
+<div *ngIf="sections || action === 'new'" class="py-10">
+	<form
+		[formGroup]="sectionBlockForm"
+		(ngSubmit)="onSubmit()"
+		class="flex flex-col space-y-3"
+	>
+		<select formControlName="section_id">
+			<option value="">-- Section --</option>
+			<option *ngFor="let section of sections" [value]="section.id">
+				{{ section.name }}
+			</option>
+		</select>
+
+		<select formControlName="block_id">
+			<option value="">-- Block --</option>
+			<option *ngFor="let block of blocks" [value]="block.id">
+				{{ block.name }}
+			</option>
+		</select>
+
+		<button
+			type="submit"
+			class="disabled:bg-purple-400"
+			[disabled]="sectionBlockForm.invalid"
+		>
+			{{ action === 'new' ? 'Create' : 'Modify' }}
+		</button>
+	</form>
+</div>

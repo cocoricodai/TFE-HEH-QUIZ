@@ -1,6 +1,8 @@
 <nav class="flex gap-6">
-	<a routerLink="/my-quiz/published" routerLinkActive="link-active"
-		>Published</a
-	>
-	<a routerLink="/my-quiz/draft" routerLinkActive="link-active">Draft</a>
+	<a routerLink="/my-quiz/published" routerLinkActive="link-active">{{
+		'my-quiz.public' | translate
+	}}</a>
+	<a routerLink="/my-quiz/draft" routerLinkActive="link-active"
+		>{{ 'my-quiz.private' | translate }}
+	</a>
 </nav>

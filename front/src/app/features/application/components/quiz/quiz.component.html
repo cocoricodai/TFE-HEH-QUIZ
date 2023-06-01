@@ -8,6 +8,13 @@
 	<quiz-second-step
 		*ngIf="currentStep === 2"
 		[quiz]="quiz"
-		(endQuiz)="endQuiz()"
+		(endQuiz)="endQuiz($event)"
 	></quiz-second-step>
+
+	<quiz-third-step
+		*ngIf="currentStep === 3"
+		[quiz]="quiz"
+		[score]="score"
+		[answers]="answers"
+	></quiz-third-step>
 </div>

@@ -1,5 +1,5 @@
 <div class="mx-auto max-w-4xl">
-	<h3 class="text-xl">New quiz</h3>
+	<h3 class="text-xl">{{ 'new-quiz.title' | translate }}</h3>
 	<hr class="mb-5 border-purple-500" />
 	<form
 		[formGroup]="firstStepForm"
@@ -16,7 +16,7 @@
 			/>
 		</div>
 
-		<div class="items-input col-span-2">
+		<div class="items-input sm:col-span-2">
 			<label for="description">Description *</label>
 			<textarea
 				id="description"
@@ -44,7 +44,7 @@
 		</div>
 
 		<div class="items-input">
-			<label for="tags">Tags (separate with a comma)</label>
+			<label for="tags">Tags {{ 'form.input.label.tags' | translate }}</label>
 			<input
 				id="tags"
 				type="text"
@@ -84,13 +84,13 @@
 
 		<div class="items-chekbox flex items-center">
 			<input
-				id="isPublished"
+				id="isPublic"
 				type="checkbox"
-				formControlName="isPublished"
+				formControlName="isPublic"
 				class="h-4 w-4 rounded text-purple-400 focus:ring-purple-400 dark:text-purple-400"
 			/>
-			<label for="isPublished" class="ml-2">{{
-				'form.input.label.published' | translate
+			<label for="isPublic" class="ml-2">{{
+				'form.input.label.public' | translate
 			}}</label>
 		</div>
 

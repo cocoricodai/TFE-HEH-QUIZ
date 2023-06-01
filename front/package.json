@@ -4,9 +4,11 @@
 	"description": "Frontend for my TFE",
 	"scripts": {
 		"ng": "ng",
+		"version": "ng version",
 		"start": "ng serve",
 		"start:docker": "ng serve --host 0.0.0.0",
 		"build": "ng build",
+		"build:prod": "ng build --configuration production",
 		"watch": "ng build --watch --configuration development",
 		"test": "ng test",
 		"mobile": "ng serve --host 0.0.0.0",
@@ -36,6 +38,7 @@
 		"ngx-cookie-service": "^15.0.0",
 		"ngx-toastr": "^16.0.2",
 		"rxjs": "~7.8.0",
+		"survey-angular": "^1.9.91",
 		"tslib": "^2.3.0",
 		"typedjson": "^1.8.0",
 		"zone.js": "~0.12.0"

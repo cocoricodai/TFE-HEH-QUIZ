@@ -1,3 +1,82 @@
 {
-	"welcome": "Welcome to the API Version 1"
+	"welcome": "Welcome to the API Version 1",
+	"models": {
+		"block": {
+			"unique": "This block already exists"
+		},
+		"campus": {
+			"unique": "This campus already exists"
+		},
+		"question": {
+			"choices": {
+				"min-max": "Min 2 and max 4 answers"
+			},
+			"points": {
+				"min-max": "Value between 1 and 10"
+			}
+		},
+		"quiz": {
+			"difficulty": {
+				"validate": "Must be easy, medium or hard"
+			},
+			"tags": {
+				"validate": "Tag can only have 3 types"
+			}
+		},
+		"role": {
+			"unique": "This role already exists"
+		},
+		"section": {
+			"unique": "This section already exists"
+		},
+		"user": {
+			"email": {
+				"unique": "This e-mail already exists",
+				"notNull": "Please enter a email",
+				"validate": "The e-mail must be from the HEH : firstname.lastname@std.heh.be or firstname.lastname@heh.be"
+			},
+			"password": {
+				"notNull": "Please enter a password",
+				"validate": "Your password must be between 7 and 15 characters long and include at least one uppercase letter, one digit, and one special character from the following list: !@#%."
+			}
+		},
+		"userProfile": {
+			"firstName": {
+				"notNull": "Please enter a firstname"
+			},
+			"lastName": {
+				"notNull": "Please enter a lastname"
+			}
+		}
+	},
+	"controller": {
+		"auth": {
+			"register": {
+				"account-created": "Your account has been successfully created! Please check your email to confirm your inscription"
+			},
+			"verify-account": {
+				"notUser": "This user doesn't exist",
+				"invalidToken": "Invalid token",
+				"alreadyVerify": "User already verified",
+				"success": "Your account has been verified"
+			},
+			"login": {
+				"notUser": "This user doesn't exist",
+				"activeAccount": "Activate your account by mail",
+				"wrongPassword": "Invalid password",
+				"success": "Sign in success"
+			},
+			"forgot-password": {
+				"notUser": "This user doesn't exist",
+				"success": "Mail send! Check your email"
+			},
+			"reset-password": {
+				"notUser": "This user doesn't exist",
+				"success": "Password uptated succesfuly"
+			},
+			"refresh-password": {
+				"success": "Refresh Token updated"
+			}
+		}
+	}
 }

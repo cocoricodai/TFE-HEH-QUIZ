@@ -1,0 +1,23 @@
+<div *ngIf="block || action === 'new'" class="py-10">
+	<form
+		[formGroup]="blockForm"
+		(ngSubmit)="onSubmit()"
+		class="flex flex-col space-y-3"
+	>
+		<label for="name">
+			<input
+				id="name"
+				formControlName="name"
+				type="text"
+				placeholder="Enter a name"
+			/>
+		</label>
+		<button
+			type="submit"
+			class="disabled:bg-purple-400"
+			[disabled]="blockForm.invalid"
+		>
+			{{ action === 'new' ? 'Create' : 'Modify' }}
+		</button>
+	</form>
+</div>

@@ -1,0 +1,30 @@
+<div *ngIf="campus || action === 'new'" class="py-10">
+	<form
+		[formGroup]="sectionForm"
+		(ngSubmit)="onSubmit()"
+		class="flex flex-col space-y-3"
+	>
+		<select formControlName="campus_id">
+			<option value="">-- Campus --</option>
+			<option *ngFor="let camp of campus" [value]="camp.id">
+				{{ camp.name }}
+			</option>
+		</select>
+
+		<label for="name">
+			<input
+				id="name"
+				formControlName="name"
+				type="text"
+				placeholder="Enter a name"
+			/>
+		</label>
+		<button
+			type="submit"
+			class="disabled:bg-purple-400"
+			[disabled]="sectionForm.invalid"
+		>
+			{{ action === 'new' ? 'Create' : 'Modify' }}
+		</button>
+	</form>
+</div>

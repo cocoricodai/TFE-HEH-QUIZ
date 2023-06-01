@@ -33,7 +33,7 @@
 			[colorBorder]="'border-blue-500'"
 			[color]="'text-blue-500'"
 			[number]="totalQuiz"
-			[title]="'Quizs'"
+			[title]="'Quiz'"
 		>
 			<ng-template #myTemplate>
 				<svg
@@ -70,8 +70,8 @@
 		<feature-dashboard-item-stats
 			[colorBorder]="'border-red-500'"
 			[color]="'text-red-500'"
-			[number]="2"
-			[title]="'lol'"
+			[number]="totalQuizDone"
+			title="Total Quiz Done"
 		>
 			<ng-template #myTemplate>
 				<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -109,6 +109,10 @@
 	</div>
 
 	<div class="col-span-4 rounded-lg bg-white p-4 dark:bg-slate-600">
-		<chart-line title="Weekly Quiz Count"></chart-line>
+		<chart-line
+			*ngIf="stats"
+			title="Weekly Quiz Count"
+			[values]="stats"
+		></chart-line>
 	</div>
 </div>

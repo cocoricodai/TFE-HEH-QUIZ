@@ -1,6 +1,6 @@
 import { jsonMember, jsonObject } from 'typedjson';
 @jsonObject
-export class LikeModel {
+export class Like {
 	@jsonMember(Number)
 	public count!: number;
 

@@ -11,7 +11,11 @@ export class TranslateManagerService {
 		return this._translateService.instant(key);
 	}
 
-	public updateLanguage(language: string) {
-		return this._translateService.use(language);
+	public getCurrentLanguage(): string {
+		return this._translateService.currentLang;
+	}
+
+	public updateLanguage(language: string): void {
+		this._translateService.use(language);
 	}
 }

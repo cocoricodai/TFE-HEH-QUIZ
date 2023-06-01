@@ -1,5 +1,6 @@
 const { Sequelize } = require('sequelize');
 const responseHelper = require('./response');
+const { getTranslate } = require('./translate');
 
 exports.error = (req, res, err) => {
 	if (
@@ -8,15 +9,15 @@ exports.error = (req, res, err) => {
 	) {
 		return responseHelper.conflict(
 			res,
-			err.errors.map((e) => e.message).join(', ')
+			err.errors.map((e) => getTranslate(req, e.message)).join(', ')
 		);
 	} else if (err instanceof Sequelize.ValidationError) {
 		return responseHelper.badRequest(
 			res,
-			err.errors.map((e) => e.message).join(', ')
+			err.errors.map((e) => getTranslate(req, e.message)).join(', ')
 		);
 	} else if (err instanceof Error) {
-		return responseHelper.badRequest(res, err.message);
+		return responseHelper.badRequest(res, getTranslate(req, err.message));
 	} else {
 		return responseHelper.errorServer(req, res);
 	}

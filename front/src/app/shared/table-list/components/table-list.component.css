@@ -2,16 +2,8 @@ th {
 	@apply border-b-2 border-gray-300 px-4 py-2 text-left;
 }
 
-th:hover {
-	@apply cursor-pointer;
-}
-
 tr:nth-child(even) {
 	@apply backdrop-brightness-90;
-}
-
-tbody tr:hover {
-	@apply cursor-pointer bg-purple-400;
 }
 
 td {

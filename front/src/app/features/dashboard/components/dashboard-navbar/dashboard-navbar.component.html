@@ -36,50 +36,58 @@
 					Quiz
 				</a>
 			</li>
-			<li class="group relative">
+
+			<li>
 				<a
-					class="flex cursor-pointer items-center rounded-md px-2 py-2 hover:bg-gray-200 hover:text-black dark:hover:bg-purple-600 dark:hover:text-white xl:px-4"
-					>Settings<svg
-						class="ml-2 h-4 w-4"
-						aria-hidden="true"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M19 9l-7 7-7-7"
-						></path>
-					</svg>
-				</a>
-				<ul
-					class="absolute top-full hidden w-full bg-gray-200 group-hover:block"
+					[routerLink]="['campus']"
+					[routerLinkActive]="[
+						'text-black',
+						'bg-gray-200',
+						'dark:text-white',
+						'dark:bg-purple-700'
+					]"
+					class="rounded-md px-2 py-2 hover:bg-gray-200 hover:text-black dark:hover:bg-purple-600 dark:hover:text-white xl:px-4"
+					>Campus</a
 				>
-					<li>
-						<a
-							[routerLink]="['campus']"
-							class="inline-block w-full px-2 py-2 hover:bg-gray-300 hover:text-black dark:hover:bg-purple-600 dark:hover:text-white xl:px-4"
-							>Campus</a
-						>
-					</li>
-					<li>
-						<a
-							[routerLink]="['section']"
-							class="inline-block w-full px-2 py-2 hover:bg-gray-300 hover:text-black dark:hover:bg-purple-600 dark:hover:text-white xl:px-4"
-							>Sections</a
-						>
-					</li>
-					<li>
-						<a
-							[routerLink]="['block']"
-							class="inline-block w-full px-2 py-2 hover:bg-gray-300 hover:text-black dark:hover:bg-purple-600 dark:hover:text-white xl:px-4"
-							>Blocks</a
-						>
-					</li>
-				</ul>
+			</li>
+			<li>
+				<a
+					[routerLink]="['section']"
+					[routerLinkActive]="[
+						'text-black',
+						'bg-gray-200',
+						'dark:text-white',
+						'dark:bg-purple-700'
+					]"
+					class="rounded-md px-2 py-2 hover:bg-gray-200 hover:text-black dark:hover:bg-purple-600 dark:hover:text-white xl:px-4"
+					>Sections</a
+				>
+			</li>
+			<li>
+				<a
+					[routerLink]="['block']"
+					[routerLinkActive]="[
+						'text-black',
+						'bg-gray-200',
+						'dark:text-white',
+						'dark:bg-purple-700'
+					]"
+					class="rounded-md px-2 py-2 hover:bg-gray-200 hover:text-black dark:hover:bg-purple-600 dark:hover:text-white xl:px-4"
+					>Blocks</a
+				>
+			</li>
+			<li>
+				<a
+					[routerLink]="['section-block']"
+					[routerLinkActive]="[
+						'text-black',
+						'bg-gray-200',
+						'dark:text-white',
+						'dark:bg-purple-700'
+					]"
+					class="rounded-md px-2 py-2 hover:bg-gray-200 hover:text-black dark:hover:bg-purple-600 dark:hover:text-white xl:px-4"
+					>SectionBlocks</a
+				>
 			</li>
 		</ul>
 	</div>
